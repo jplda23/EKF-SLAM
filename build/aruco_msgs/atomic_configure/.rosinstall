@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/de/catkin_ws/devel/.private/aruco_msgs/setup.sh

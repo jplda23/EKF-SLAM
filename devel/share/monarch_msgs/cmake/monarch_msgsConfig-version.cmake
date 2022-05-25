@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/monarch_msgs/share/monarch_msgs/cmake/monarch_msgsConfig-version.cmake

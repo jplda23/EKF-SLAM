@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/my_aruco_tracker/lib/pkgconfig/my_aruco_tracker.pc

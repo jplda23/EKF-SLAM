@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/mbot_bringup/share/mbot_bringup/cmake/mbot_bringupConfig-version.cmake

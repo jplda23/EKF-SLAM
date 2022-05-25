@@ -1,0 +1,8 @@
+prefix=/home/de/catkin_ws/devel/.private/mbot_semantic_head_controller
+
+Name: mbot_semantic_head_controller
+Description: Description of mbot_semantic_head_controller
+Version: 0.0.1
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: roscpp monarch_msgs

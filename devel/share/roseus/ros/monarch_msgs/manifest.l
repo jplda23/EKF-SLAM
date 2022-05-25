@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/monarch_msgs/share/roseus/ros/monarch_msgs/manifest.l

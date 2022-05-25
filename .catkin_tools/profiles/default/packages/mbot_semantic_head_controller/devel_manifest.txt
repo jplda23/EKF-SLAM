@@ -1,0 +1,6 @@
+mbot_simulation_sa/resources/packages/mbot_semantic_head_controller
+/home/de/catkin_ws/devel/.private/mbot_semantic_head_controller/cmake.lock /home/de/catkin_ws/devel/./cmake.lock
+/home/de/catkin_ws/devel/.private/mbot_semantic_head_controller/share/mbot_semantic_head_controller/cmake/mbot_semantic_head_controllerConfig.cmake /home/de/catkin_ws/devel/share/mbot_semantic_head_controller/cmake/mbot_semantic_head_controllerConfig.cmake
+/home/de/catkin_ws/devel/.private/mbot_semantic_head_controller/share/mbot_semantic_head_controller/cmake/mbot_semantic_head_controllerConfig-version.cmake /home/de/catkin_ws/devel/share/mbot_semantic_head_controller/cmake/mbot_semantic_head_controllerConfig-version.cmake
+/home/de/catkin_ws/devel/.private/mbot_semantic_head_controller/lib/pkgconfig/mbot_semantic_head_controller.pc /home/de/catkin_ws/devel/lib/pkgconfig/mbot_semantic_head_controller.pc
+/home/de/catkin_ws/devel/.private/mbot_semantic_head_controller/lib/mbot_semantic_head_controller/semantic_head_controller /home/de/catkin_ws/devel/lib/mbot_semantic_head_controller/semantic_head_controller

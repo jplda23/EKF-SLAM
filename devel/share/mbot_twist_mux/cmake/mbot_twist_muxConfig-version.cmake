@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/mbot_twist_mux/share/mbot_twist_mux/cmake/mbot_twist_muxConfig-version.cmake

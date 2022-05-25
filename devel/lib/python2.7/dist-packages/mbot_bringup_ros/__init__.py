@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/mbot_bringup/lib/python2.7/dist-packages/mbot_bringup_ros/__init__.py

@@ -1,0 +1,8 @@
+prefix=/home/de/catkin_ws/devel/.private/mbot_twist_mux
+
+Name: mbot_twist_mux
+Description: Description of mbot_twist_mux
+Version: 0.0.1
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

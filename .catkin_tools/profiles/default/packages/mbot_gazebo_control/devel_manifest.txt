@@ -1,0 +1,7 @@
+mbot_simulation_sa/resources/packages/mbot_gazebo_control
+/home/de/catkin_ws/devel/.private/mbot_gazebo_control/cmake.lock /home/de/catkin_ws/devel/./cmake.lock
+/home/de/catkin_ws/devel/.private/mbot_gazebo_control/share/mbot_gazebo_control/cmake/mbot_gazebo_controlConfig-version.cmake /home/de/catkin_ws/devel/share/mbot_gazebo_control/cmake/mbot_gazebo_controlConfig-version.cmake
+/home/de/catkin_ws/devel/.private/mbot_gazebo_control/share/mbot_gazebo_control/cmake/mbot_gazebo_controlConfig.cmake /home/de/catkin_ws/devel/share/mbot_gazebo_control/cmake/mbot_gazebo_controlConfig.cmake
+/home/de/catkin_ws/devel/.private/mbot_gazebo_control/lib/pkgconfig/mbot_gazebo_control.pc /home/de/catkin_ws/devel/lib/pkgconfig/mbot_gazebo_control.pc
+/home/de/catkin_ws/devel/.private/mbot_gazebo_control/lib/python2.7/dist-packages/mbot_gazebo_control_ros/__init__.py /home/de/catkin_ws/devel/lib/python2.7/dist-packages/mbot_gazebo_control_ros/__init__.py
+/home/de/catkin_ws/devel/.private/mbot_gazebo_control/lib/mbot_gazebo_control/mbot_head_republisher /home/de/catkin_ws/devel/lib/mbot_gazebo_control/mbot_head_republisher

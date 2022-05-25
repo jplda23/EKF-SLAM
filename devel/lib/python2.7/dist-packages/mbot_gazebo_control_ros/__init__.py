@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/mbot_gazebo_control/lib/python2.7/dist-packages/mbot_gazebo_control_ros/__init__.py

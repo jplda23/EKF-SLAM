@@ -1,0 +1,8 @@
+prefix=/home/de/catkin_ws/install
+
+Name: mbot_simulation_environments
+Description: Description of mbot_simulation_environments
+Version: 0.0.1
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

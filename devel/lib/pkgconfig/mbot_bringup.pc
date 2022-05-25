@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/mbot_bringup/lib/pkgconfig/mbot_bringup.pc

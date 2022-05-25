@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/my_aruco_tracker/share/my_aruco_tracker/cmake/my_aruco_trackerConfig.cmake

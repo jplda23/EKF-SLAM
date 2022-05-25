@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/cob_scan_unifier/lib/pkgconfig/cob_scan_unifier.pc

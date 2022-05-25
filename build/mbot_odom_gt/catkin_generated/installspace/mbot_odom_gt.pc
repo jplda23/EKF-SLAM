@@ -1,0 +1,8 @@
+prefix=/home/de/catkin_ws/install
+
+Name: mbot_odom_gt
+Description: Description of mbot_odom_gt
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib -lmbot_gazebo_ros_p3d
+Requires: roscpp gazebo_ros std_msgs tf

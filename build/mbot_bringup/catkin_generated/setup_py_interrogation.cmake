@@ -1,0 +1,7 @@
+set(mbot_bringup_SETUP_PY_SETUP_MODULE "distutils.core")
+set(mbot_bringup_SETUP_PY_VERSION "0.0.1")
+set(mbot_bringup_SETUP_PY_SCRIPTS "")
+set(mbot_bringup_SETUP_PY_PACKAGES "mbot_bringup_ros")
+set(mbot_bringup_SETUP_PY_PACKAGE_DIRS "ros/src/mbot_bringup_ros")
+set(mbot_bringup_SETUP_PY_MODULES "")
+set(mbot_bringup_SETUP_PY_MODULE_DIRS "")

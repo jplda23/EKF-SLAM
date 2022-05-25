@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/monarch_msgs/share/gennodejs/ros/monarch_msgs/msg/_index.js

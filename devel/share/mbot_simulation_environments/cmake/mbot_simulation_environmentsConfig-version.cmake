@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/mbot_simulation_environments/share/mbot_simulation_environments/cmake/mbot_simulation_environmentsConfig-version.cmake

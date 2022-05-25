@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/mbot_twist_mux/lib/pkgconfig/mbot_twist_mux.pc

@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/aruco/share/aruco/cmake/arucoConfig-version.cmake

@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/mbot_odom_gt/lib/pkgconfig/mbot_odom_gt.pc

@@ -1,0 +1,6 @@
+mbot_simulation_sa/resources/packages/mbot_plugins/ridgeback_gazebo_plugins
+/home/de/catkin_ws/devel/.private/ridgeback_gazebo_plugins/cmake.lock /home/de/catkin_ws/devel/./cmake.lock
+/home/de/catkin_ws/devel/.private/ridgeback_gazebo_plugins/share/ridgeback_gazebo_plugins/cmake/ridgeback_gazebo_pluginsConfig.cmake /home/de/catkin_ws/devel/share/ridgeback_gazebo_plugins/cmake/ridgeback_gazebo_pluginsConfig.cmake
+/home/de/catkin_ws/devel/.private/ridgeback_gazebo_plugins/share/ridgeback_gazebo_plugins/cmake/ridgeback_gazebo_pluginsConfig-version.cmake /home/de/catkin_ws/devel/share/ridgeback_gazebo_plugins/cmake/ridgeback_gazebo_pluginsConfig-version.cmake
+/home/de/catkin_ws/devel/.private/ridgeback_gazebo_plugins/lib/libridgeback_ros_force_based_move.so /home/de/catkin_ws/devel/lib/libridgeback_ros_force_based_move.so
+/home/de/catkin_ws/devel/.private/ridgeback_gazebo_plugins/lib/pkgconfig/ridgeback_gazebo_plugins.pc /home/de/catkin_ws/devel/lib/pkgconfig/ridgeback_gazebo_plugins.pc

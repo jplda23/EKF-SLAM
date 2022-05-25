@@ -1,0 +1,1 @@
+/home/de/catkin_ws/devel/.private/mbot_gazebo_control/lib/pkgconfig/mbot_gazebo_control.pc

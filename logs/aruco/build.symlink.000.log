@@ -1,0 +1,5 @@
+Symlinking /home/de/catkin_ws/devel/share/aruco/cmake/arucoConfig-version.cmake
+Symlinking /home/de/catkin_ws/devel/share/aruco/cmake/arucoConfig.cmake
+Symlinking /home/de/catkin_ws/devel/lib/libaruco.so
+Symlinking /home/de/catkin_ws/devel/lib/pkgconfig/aruco.pc
+Symlinking /home/de/catkin_ws/devel/lib/aruco/optimalmarkers

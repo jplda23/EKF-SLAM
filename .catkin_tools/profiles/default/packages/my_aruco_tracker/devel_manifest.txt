@@ -1,0 +1,5 @@
+my_aruco_tracker
+/home/de/catkin_ws/devel/.private/my_aruco_tracker/cmake.lock /home/de/catkin_ws/devel/./cmake.lock
+/home/de/catkin_ws/devel/.private/my_aruco_tracker/share/my_aruco_tracker/cmake/my_aruco_trackerConfig-version.cmake /home/de/catkin_ws/devel/share/my_aruco_tracker/cmake/my_aruco_trackerConfig-version.cmake
+/home/de/catkin_ws/devel/.private/my_aruco_tracker/share/my_aruco_tracker/cmake/my_aruco_trackerConfig.cmake /home/de/catkin_ws/devel/share/my_aruco_tracker/cmake/my_aruco_trackerConfig.cmake
+/home/de/catkin_ws/devel/.private/my_aruco_tracker/lib/pkgconfig/my_aruco_tracker.pc /home/de/catkin_ws/devel/lib/pkgconfig/my_aruco_tracker.pc
