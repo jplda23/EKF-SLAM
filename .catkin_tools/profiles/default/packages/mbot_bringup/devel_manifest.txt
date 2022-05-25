@@ -1,0 +1,6 @@
+mbot_simulation_sa/resources/packages/mbot_bringup
+/home/jplda23/catkin_ws/devel/.private/mbot_bringup/cmake.lock /home/jplda23/catkin_ws/devel/./cmake.lock
+/home/jplda23/catkin_ws/devel/.private/mbot_bringup/lib/pkgconfig/mbot_bringup.pc /home/jplda23/catkin_ws/devel/lib/pkgconfig/mbot_bringup.pc
+/home/jplda23/catkin_ws/devel/.private/mbot_bringup/lib/python2.7/dist-packages/mbot_bringup_ros/__init__.py /home/jplda23/catkin_ws/devel/lib/python2.7/dist-packages/mbot_bringup_ros/__init__.py
+/home/jplda23/catkin_ws/devel/.private/mbot_bringup/share/mbot_bringup/cmake/mbot_bringupConfig.cmake /home/jplda23/catkin_ws/devel/share/mbot_bringup/cmake/mbot_bringupConfig.cmake
+/home/jplda23/catkin_ws/devel/.private/mbot_bringup/share/mbot_bringup/cmake/mbot_bringupConfig-version.cmake /home/jplda23/catkin_ws/devel/share/mbot_bringup/cmake/mbot_bringupConfig-version.cmake

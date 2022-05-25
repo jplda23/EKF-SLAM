@@ -1,0 +1,4 @@
+[35m[1mScanning dependencies of target ridgeback_ros_force_based_move[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/ridgeback_ros_force_based_move.dir/src/ridgeback_ros_force_based_move.cpp.o[0m
+[100%] [32m[1mLinking CXX shared library /home/jplda23/catkin_ws/devel/.private/ridgeback_gazebo_plugins/lib/libridgeback_ros_force_based_move.so[0m
+[100%] Built target ridgeback_ros_force_based_move

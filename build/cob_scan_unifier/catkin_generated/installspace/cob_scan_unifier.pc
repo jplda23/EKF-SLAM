@@ -1,0 +1,8 @@
+prefix=/home/jplda23/catkin_ws/install
+
+Name: cob_scan_unifier
+Description: Description of cob_scan_unifier
+Version: 0.6.7
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

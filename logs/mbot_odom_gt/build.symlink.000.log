@@ -1,0 +1,4 @@
+Symlinking /home/jplda23/catkin_ws/devel/lib/libmbot_gazebo_ros_p3d.so
+Symlinking /home/jplda23/catkin_ws/devel/lib/pkgconfig/mbot_odom_gt.pc
+Symlinking /home/jplda23/catkin_ws/devel/share/mbot_odom_gt/cmake/mbot_odom_gtConfig-version.cmake
+Symlinking /home/jplda23/catkin_ws/devel/share/mbot_odom_gt/cmake/mbot_odom_gtConfig.cmake

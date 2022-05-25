@@ -1,0 +1,4 @@
+Symlinking /home/jplda23/catkin_ws/devel/lib/pkgconfig/mbot_bringup.pc
+Symlinking /home/jplda23/catkin_ws/devel/lib/python2.7/dist-packages/mbot_bringup_ros/__init__.py
+Symlinking /home/jplda23/catkin_ws/devel/share/mbot_bringup/cmake/mbot_bringupConfig.cmake
+Symlinking /home/jplda23/catkin_ws/devel/share/mbot_bringup/cmake/mbot_bringupConfig-version.cmake

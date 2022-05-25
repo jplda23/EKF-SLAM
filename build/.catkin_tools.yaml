@@ -1,0 +1,6 @@
+devel_space: /home/jplda23/catkin_ws/devel
+install: false
+install_space: /home/jplda23/catkin_ws/install
+profile: default
+source_space: /home/jplda23/catkin_ws/src
+workspace: /home/jplda23/catkin_ws

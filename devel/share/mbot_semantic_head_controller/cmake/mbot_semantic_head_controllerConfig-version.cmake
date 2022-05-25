@@ -1,0 +1,1 @@
+/home/jplda23/catkin_ws/devel/.private/mbot_semantic_head_controller/share/mbot_semantic_head_controller/cmake/mbot_semantic_head_controllerConfig-version.cmake

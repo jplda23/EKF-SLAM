@@ -1,0 +1,4 @@
+[35m[1mScanning dependencies of target mbot_gazebo_ros_p3d[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/mbot_gazebo_ros_p3d.dir/src/gazebo_ros_p3d.cpp.o[0m
+[100%] [32m[1mLinking CXX shared library /home/jplda23/catkin_ws/devel/.private/mbot_odom_gt/lib/libmbot_gazebo_ros_p3d.so[0m
+[100%] Built target mbot_gazebo_ros_p3d

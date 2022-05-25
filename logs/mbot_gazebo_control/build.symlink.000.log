@@ -1,0 +1,5 @@
+Symlinking /home/jplda23/catkin_ws/devel/lib/pkgconfig/mbot_gazebo_control.pc
+Symlinking /home/jplda23/catkin_ws/devel/lib/python2.7/dist-packages/mbot_gazebo_control_ros/__init__.py
+Symlinking /home/jplda23/catkin_ws/devel/lib/mbot_gazebo_control/mbot_head_republisher
+Symlinking /home/jplda23/catkin_ws/devel/share/mbot_gazebo_control/cmake/mbot_gazebo_controlConfig-version.cmake
+Symlinking /home/jplda23/catkin_ws/devel/share/mbot_gazebo_control/cmake/mbot_gazebo_controlConfig.cmake

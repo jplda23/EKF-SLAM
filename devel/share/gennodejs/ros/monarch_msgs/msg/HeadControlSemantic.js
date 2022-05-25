@@ -1,0 +1,1 @@
+/home/jplda23/catkin_ws/devel/.private/monarch_msgs/share/gennodejs/ros/monarch_msgs/msg/HeadControlSemantic.js

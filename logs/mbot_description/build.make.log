@@ -1,0 +1,25 @@
+[36mInstall the project...[0m
+-- Install configuration: ""
+-- Installing: /home/jplda23/catkin_ws/install/_setup_util.py
+-- Installing: /home/jplda23/catkin_ws/install/env.sh
+-- Installing: /home/jplda23/catkin_ws/install/setup.bash
+-- Installing: /home/jplda23/catkin_ws/install/local_setup.bash
+-- Installing: /home/jplda23/catkin_ws/install/setup.sh
+-- Installing: /home/jplda23/catkin_ws/install/local_setup.sh
+-- Installing: /home/jplda23/catkin_ws/install/setup.zsh
+-- Installing: /home/jplda23/catkin_ws/install/local_setup.zsh
+-- Installing: /home/jplda23/catkin_ws/install/.rosinstall
+-- Installing: /home/jplda23/catkin_ws/install/lib/pkgconfig/mbot_description.pc
+-- Installing: /home/jplda23/catkin_ws/install/share/mbot_description/cmake/mbot_descriptionConfig.cmake
+-- Installing: /home/jplda23/catkin_ws/install/share/mbot_description/cmake/mbot_descriptionConfig-version.cmake
+-- Installing: /home/jplda23/catkin_ws/install/share/mbot_description/package.xml
+-- Up-to-date: /home/jplda23/.gazebo/models/mbot_description/meshes
+-- Up-to-date: /home/jplda23/.gazebo/models/mbot_description/meshes/head
+-- Installing: /home/jplda23/.gazebo/models/mbot_description/meshes/head/mbot_head.dae
+-- Installing: /home/jplda23/.gazebo/models/mbot_description/meshes/head/mbot_face_color.png
+-- Up-to-date: /home/jplda23/.gazebo/models/mbot_description/meshes/sensors
+-- Installing: /home/jplda23/.gazebo/models/mbot_description/meshes/sensors/asus_camera_simple.dae
+-- Installing: /home/jplda23/.gazebo/models/mbot_description/meshes/sensors/hokuyo.dae
+-- Up-to-date: /home/jplda23/.gazebo/models/mbot_description/meshes/body
+-- Installing: /home/jplda23/.gazebo/models/mbot_description/meshes/body/mbot_body.dae
+-- Installing: /home/jplda23/.gazebo/models/mbot_description/meshes/body/isrl.png

@@ -1,0 +1,1 @@
+/home/jplda23/catkin_ws/devel/.private/mbot_simulation_environments/lib/pkgconfig/mbot_simulation_environments.pc

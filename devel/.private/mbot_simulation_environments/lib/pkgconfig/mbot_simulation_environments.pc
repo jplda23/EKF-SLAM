@@ -1,0 +1,8 @@
+prefix=/home/jplda23/catkin_ws/devel/.private/mbot_simulation_environments
+
+Name: mbot_simulation_environments
+Description: Description of mbot_simulation_environments
+Version: 0.0.1
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

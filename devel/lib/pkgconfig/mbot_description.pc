@@ -1,0 +1,1 @@
+/home/jplda23/catkin_ws/devel/.private/mbot_description/lib/pkgconfig/mbot_description.pc

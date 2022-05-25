@@ -1,0 +1,4 @@
+[35m[1mScanning dependencies of target mbot_head_republisher[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/mbot_head_republisher.dir/ros/src/mbot_head_gazebo_republisher.cpp.o[0m
+[100%] [32m[1mLinking CXX executable /home/jplda23/catkin_ws/devel/.private/mbot_gazebo_control/lib/mbot_gazebo_control/mbot_head_republisher[0m
+[100%] Built target mbot_head_republisher

@@ -1,0 +1,7 @@
+set(mbot_gazebo_control_SETUP_PY_SETUP_MODULE "distutils.core")
+set(mbot_gazebo_control_SETUP_PY_VERSION "0.0.1")
+set(mbot_gazebo_control_SETUP_PY_SCRIPTS "")
+set(mbot_gazebo_control_SETUP_PY_PACKAGES "mbot_gazebo_control_ros")
+set(mbot_gazebo_control_SETUP_PY_PACKAGE_DIRS "ros/src/mbot_gazebo_control_ros")
+set(mbot_gazebo_control_SETUP_PY_MODULES "")
+set(mbot_gazebo_control_SETUP_PY_MODULE_DIRS "")
