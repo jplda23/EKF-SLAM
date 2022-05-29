@@ -20,27 +20,61 @@ if ~exist('./video', 'dir')
 end
 
 %% Import data
-rosbag_name = ('./rosbags/arucu_rosbag.bag');
+rosbag_name = ('./rosbags/full_info.bag');
 
 bag = rosbag(rosbag_name);
 start = bag.StartTime;
 finish = bag.EndTime;
 
-bagselect1 = select(bag,"Topic","/odom_gt");
+%% Depth Measurements
+cameraselect = select(bag,"Topic","/head_camera/depth_registered/points");
+camerastruct = readMessages(cameraselect);
+cloud = cell(252,1);
 
-%% Print topics in screen
-rosbag info './rosbags/arucu_rosbag.bag';
+for i=1:length(camerastruct)
+    cloud{i} = readXYZ(camerastruct{i,1});
+end
 
-%% Slam Map Builder
-%slamMapBuilder
 
-%% Plot pos in map x,y
+% pointcloud = camerastruct{4,1};
+% scatter3(pointcloud)
 
-bSel = select(bag,'Topic','/odom_gt');
-msgStructs = readMessages(bSel,'DataFormat','struct');
+
+% cloud = zeros(252, 307200, 3)
+% xyz = readXYZ(pointcloud);
+
+
+%% Gather Relevant Data in TimeSeries
+bag_odom = select(bag,"Topic","/odom_gt");
+bag_vel = select(bag,"Topic","/cmd_vel");
+bsel = select(bag_odom,"Time",[start finish]);
+b_IMU = select(bag,"Topic","/imu/data");
+
+msgVel = readMessages(bag_vel,'DataFormat','struct');
+msgIMU = readMessages(b_IMU,'DataFormat','struct');
+aux = timeseries(bag_vel,"Linear.X");
+velX = timeseries2timetable(aux);
+
+ts = timeseries(bsel,"Pose.Pose.Position.X","Pose.Pose.Position.Y","Twist.Twist.Angular.X");
+tt = timeseries2timetable(ts);
+
+msgStructs = readMessages(bag_odom,'DataFormat','struct');
 
 xPoints = cellfun(@(m) double(m.Pose.Pose.Position.X),msgStructs);
 yPoints = cellfun(@(m) double(m.Pose.Pose.Position.Y),msgStructs);
+theta = cellfun(@(m) double(m.Twist.Twist.Angular.Z),msgStructs);
+
+%% Save Workspace
+save('data','msgStructs','msgVel','velX','tt',"start","finish","theta","yPoints","xPoints")
+save('data_new', '-regexp', '^(?!(b_IMU|bag|bag_odom|bag_vel|bsel|canerasekect|pointcloud)$).')
+
+%% Print topics in screen
+rosbag info './rosbags/full_info.bag';
+
+%% Slam Map Builder
+slamMapBuilder
+
+%% Plot pos in map x,y
 
 xPoints = xPoints(1:end);
 yPoints = yPoints(1:end);
@@ -58,9 +92,9 @@ saveas(gcf,"./imagens/trajectory/trajectory.png");
 startT = bag.StartTime;
 endT = bag.EndTime;
 %depthLim =1000; %remove all depth data greater than depthLim
-dataType = {'/head_camera/rgb/image_raw';'/head_camera/depth/image_raw';'/neck_camera/depth/image_raw'};    
+dataType = {'/head_camera/rgb/image_raw';'/head_camera/depth_registered/points';'/neck_camera/depth/image_raw'};    
 
-for i=1
+for i=2
     dataT=dataType{i};
     bagselect1 = select(bag, 'Topic', dataT);
     bagselect2 = select(bag, 'Time', [startT  endT], 'Topic', dataT);
@@ -105,22 +139,6 @@ for ii = 1:size(msgs,1)
 end
 
 close(outputVideo)
-
-%% Plot velocity over time
-bagselect = select(bag,"Time",[start finish]);
-ts = timeseries(bagselect1,"Pose.Pose.Position.X","Twist.Twist.Angular.Z");
-ts1 = timeseries(bagselect1,"Pose.Pose.Position.X","Pose.Pose.Position.Y");
-
-ts.Data;
-
-% x = max()
-
-% bag  = rosbag('rosbag.bag');
-% cam = select(bag,'Topic','/head_camera/rgb/image_raw');
-% msgStructs = readMessages(cam,1,"DataFormat","struct"); %Read 1 message
-% 
-% I = readImage(msgStructs);
-
 
 
 %% Image visualization
