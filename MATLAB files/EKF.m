@@ -4,6 +4,14 @@ clear
 close all;
 clc
 
+%% Directory creation
+if ~exist('./imagens', 'dir')
+    mkdir('imagens');
+end
+if ~exist('./imagens/trajectory', 'dir')
+    mkdir('imagens/trajectory');
+end
+
 %% Import Data
 
 load("RealvsOdom.mat");                 % Get Rosbag Information
@@ -13,9 +21,9 @@ load("RealvsOdom.mat");                 % Get Rosbag Information
 
 N = 10;                                 % Number of Landmarks
 X_predicted = zeros(2*N+3, 1);          % State Vector
-Sigma = 99E99 * eye(2*N+3, 2*N+3);      % Matriz das Covariâncias
-Fx = zeros(3, 2*N+3);                   % Matriz Desnecessária
-G = zeros(2*N+3, 2*N+3);                % Jaconiano da função de Movimento
+Sigma = 99E99 * eye(2*N+3, 2*N+3);      % Covariance Matrix
+Fx = zeros(3, 2*N+3);                   % Usefull Matrix 
+G = zeros(2*N+3, 2*N+3);                % Jacobian for the move function
 K = zeros(2*N+3, 2);                    % Kalman Gain
 
 time = Odometria(:,1);
@@ -24,11 +32,11 @@ y = Odometria(:,3);
 theta = Odometria(:,4);
 
 Q = [5^2 0;
-    0 5^2];                             % Covariância sensores landmarks;
+    0 5^2];                          % Covariance of the sensors landmarks;
 
 R = [5^2 0 0;
     0 5^2 0;
-    0 0 5^2];                           % Covariância sensores odometria
+    0 0 5^2];                        % Covariance sensors Odometry
 
 Sigma(1:3, :) = 0;
 
@@ -40,7 +48,11 @@ X_predicted(1) = x(1)+0.5;
 X_predicted(2) = y(1)+0.5;
 X_predicted(3) = theta(1);
 
-predictions_x = zeros(2*N+3, length(time));                  
+%The output is stored in predictions_x in line array. The first 3 are x,y
+%and theta estimated states. The following are the landmarks estimated
+%positions in x and y. 2 lines for each landmark.
+predictions_x = zeros(2*N+3, length(time));     
+
 Kalman_gains = zeros(2*N+3, 2, length(time));
 
 %% EKF
@@ -125,5 +137,6 @@ legend('Odometria','Real')
 xlabel("X")
 ylabel("Y")
 title("Trajectory of the robot")
+saveas(gcf,"./imagens/trajectory/EKF_trajectory.png");
 
 
