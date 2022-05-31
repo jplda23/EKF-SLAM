@@ -6,13 +6,13 @@ clc
 
 %% Import Data
 
-load("RealvsOdom.mat");                 %Get Rosbag Information
+load("RealvsOdom.mat");                 % Get Rosbag Information
 %A = dlmread('landmarks.txt');          % Get Landmark Information
 
 %% Inicialize algorith
 
-N = 10;                                 % Número de Landmarks
-X_predicted = zeros(2*N+3, 1);          % Vetor de Estado
+N = 10;                                 % Number of Landmarks
+X_predicted = zeros(2*N+3, 1);          % State Vector
 Sigma = 99E99 * eye(2*N+3, 2*N+3);      % Matriz das Covariâncias
 Fx = zeros(3, 2*N+3);                   % Matriz Desnecessária
 G = zeros(2*N+3, 2*N+3);                % Jaconiano da função de Movimento
@@ -36,8 +36,8 @@ Fx(1,1) = 1;
 Fx(2,2) = 1;
 Fx(3,3) = 1;
 
-X_predicted(1) = x(1);
-X_predicted(2) = y(1);
+X_predicted(1) = x(1)+0.5;
+X_predicted(2) = y(1)+0.5;
 X_predicted(3) = theta(1);
 
 predictions_x = zeros(2*N+3, length(time));                  
