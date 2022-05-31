@@ -114,3 +114,16 @@ for i = 2:length(time)
     predictions_x(:, i) = X_predicted;                  
     Kalman_gains(:,:, i) = K;
 end
+
+%% Plot results from EKF
+
+figure()
+plot(predictions_x(1,:),predictions_x(2,:))
+hold on
+plot(Real(:,2),Real(:,3))
+legend('Odometria','Real')
+xlabel("X")
+ylabel("Y")
+title("Trajectory of the robot")
+
+
