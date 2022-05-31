@@ -65,22 +65,34 @@ bag_odom = select(bag,"Topic","/odom_diff");
 bag_real = select(bag,"Topic","/odom_gt");
 
 %Gather time, X, Y and Theta values of odometry in Odometria matrix
-ts = timeseries(bag_odom,"Pose.Pose.Position.X","Pose.Pose.Position.Y","Twist.Twist.Angular.Z");
-Odometria(:,2:4) = ts.Data;
+ts = timeseries(bag_odom,"Pose.Pose.Position.X","Pose.Pose.Position.Y");
+or = timeseries(bag_odom,"Pose.Pose.Orientation.X","Pose.Pose.Orientation.Y","Pose.Pose.Orientation.Z","Pose.Pose.Orientation.W");
+Odometria(:,2:3) = ts.Data;
 Odometria(:,1) = ts.time;
+matrix_aux = zeros(length(Odometria),3);
+for i = 1:length(Odometria)
+    matrix_aux(i,1:3) = quat2eul(or.Data(i,:));
+end
+Odometria(:,4) = matrix_aux(:,3);
 
 %Gather time, X, Y and Theta real values in Real matrix
 %The topic odom_gt receives the ground truth from gazebo/model_states in a 
 % 50Hz frequency, therefore we can use it instead of the full data
-ts2 = timeseries(bag_real,"Pose.Pose.Position.X","Pose.Pose.Position.Y","Twist.Twist.Angular.Z");
-Real(:,2:4) = ts2.Data;
+ts2 = timeseries(bag_real,"Pose.Pose.Position.X","Pose.Pose.Position.Y");
+or2 = timeseries(bag_real,"Pose.Pose.Orientation.X","Pose.Pose.Orientation.Y","Pose.Pose.Orientation.Z","Pose.Pose.Orientation.W");
+Real(:,2:3) = ts2.Data;
 Real(:,1) = ts2.time;
+matrix_aux2 = zeros(length(Real),3);
+for i = 1:length(Real)
+    matrix_aux2(i,1:3) = quat2eul(or2.Data(i,:));
+end
+Real(:,4) = matrix_aux2(:,3);
 
 %remove the next 2 comments in case of crash at the end of the simmulation:
-% Odometria = Odometria(1:end-100,:);  
-% Real = Real(1:end-100,:);
+Odometria = Odometria(1:end-100,:);  
+Real = Real(1:end-100,:);
 
-% Save Workspace
+%% Save Workspace
 save('RealvsOdom',"Real","Odometria")
 
 % Different way of saving. Used to save all except some files:
@@ -88,25 +100,24 @@ save('RealvsOdom',"Real","Odometria")
 
 %% Different way of accessing Data from Rosbag - used for debug - Commented
 
-% odom = readMessages(bag_time,'DataFormat','struct');
-% real = readMessages(bag_real,'DataFormat','struct');
-% time = readMessages(bag_time,'DataFormat','struct');
-% 
-% x_odom = cellfun(@(m) double(m.Pose.Pose.Position.X),odom);
-% y_odom = cellfun(@(m) double(m.Pose.Pose.Position.Y),odom);
-% theta_odom = cellfun(@(m) double(m.Twist.Twist.Angular.Z),odom);
-% 
-% x_real = cellfun(@(m) double(m.Pose.Pose.Position.X),odom);
-% y_real = cellfun(@(m) double(m.Pose.Pose.Position.Y),odom);
-% theta_real = cellfun(@(m) double(m.Twist.Twist.Angular.Z),odom);
-% 
-% bag_vel = select(bag,"Topic","/cmd_vel");
-% b_IMU = select(bag,"Topic","/imu/data");
-% 
-% msgVel = readMessages(bag_vel,'DataFormat','struct');
-% msgIMU = readMessages(b_IMU,'DataFormat','struct');
-% aux = timeseries(bag_vel,"Linear.X");
-% velX = timeseries2timetable(aux);
+odom = readMessages(bag_odom,'DataFormat','struct');
+real = readMessages(bag_real,'DataFormat','struct');
+
+x_odom = cellfun(@(m) double(m.Pose.Pose.Position.X),odom);
+y_odom = cellfun(@(m) double(m.Pose.Pose.Position.Y),odom);
+theta_odom = cellfun(@(m) double(m.Twist.Twist.Angular.Z),odom);
+
+x_real = cellfun(@(m) double(m.Pose.Pose.Position.X),odom);
+y_real = cellfun(@(m) double(m.Pose.Pose.Position.Y),odom);
+theta_real = cellfun(@(m) double(m.Twist.Twist.Angular.Z),odom);
+
+bag_vel = select(bag,"Topic","/cmd_vel");
+b_IMU = select(bag,"Topic","/imu/data");
+
+msgVel = readMessages(bag_vel,'DataFormat','struct');
+msgIMU = readMessages(b_IMU,'DataFormat','struct');
+aux = timeseries(bag_vel,"Linear.X");
+velX = timeseries2timetable(aux);
 
 %% Print rosbag topics in screen - used for debug
 rosbag info './rosbags/full_info.bag';
@@ -117,12 +128,12 @@ rosbag info './rosbags/full_info.bag';
 %% Plot pos in map x,y
 
 %Reference shift from Robot frame to the World frame
-Odometria(:,2) = Odometria(:,2) - 0.5;
-Odometria(:,3) = Odometria(:,3) - 0.5;
+x = Odometria(:,2)+0.5;
+y = Odometria(:,3)+0.5;
 
 %Plot real data vs odometry data
 figure()
-plot(Odometria(:,2),Odometria(:,3))
+plot(x,y)
 hold on
 plot(Real(:,2),Real(:,3))
 legend('Odometria','Real')
