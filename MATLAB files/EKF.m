@@ -1,11 +1,13 @@
 %% Inicialize
+
 clear
 close all;
 clc
 
 %% Import Data
-load("data.mat"); %Get Rosbag Information
-%A = dlmread('landmarks.txt'); % Get Landmark Information
+
+load("RealvsOdom.mat");                 %Get Rosbag Information
+%A = dlmread('landmarks.txt');          % Get Landmark Information
 
 %% Inicialize algorith
 
@@ -33,22 +35,22 @@ X_predicted(1) = Odometria(1,2);
 X_predicted(2) = Odometria(1,3);
 X_predicted(3) = Odometria(1,4);
 
-predictions_x = zeros(2*N+3, length(Odometria));                  
-Kalman_gains = zeros(2*N+3, 2, length(Odometria));
+predictions_x = zeros(2*N+3, length(Odometria(:,1)));                  
+Kalman_gains = zeros(2*N+3, 2, length(Odometria(:,1)));
 
 %% EKF
 
-for i = 2:length(xPoints)
+for i = 2:length(Odometria(:,1))
 
-    delta_d = sqrt((xPoints(i) - xPoints(i-1))^2 + (yPoints(i) - yPoints(i-1))^2);
-    delta_theta = atan2(yPoints(i) - yPoints(i-1), xPoints(i) - xPoints(i-1));
-    dif_theta = theta(i) - theta(i-1);
+    delta_d = sqrt((Odometria(i,2) - Odometria(i-1,2))^2 + (Odometria(i,3) - Odometria(i-1,3))^2);
+    delta_theta = atan2(Odometria(i,3) - Odometria(i-1,3), Odometria(i,2) - Odometria(i-1,2));
+    dif_theta = Odometria(i,4) - Odometria(i-1,4);
 
     % Predict
     
     g_motion = [delta_d * cos(delta_theta);
                 delta_d * sin(delta_theta);
-                theta(i-1) + dif_theta];
+               Odometria(i-1,4) + dif_theta];
 
     G_motion = [0 0 -delta_d*sin(delta_theta);
                 0 0 delta_d*cos(delta_theta);
@@ -63,16 +65,16 @@ for i = 2:length(xPoints)
     Sigma_predicted = G*Sigma*G' + Fx'*R*Fx;
 
 
-    for j = 1:N_vistos         % Para todos os landmarks que foram vistos
+    for j = 1:1                         % Para todos os landmarks que foram vistos
     
-        if j == 5               % Tirar isto, só para não entrar nesta parte do código
-            id_seen = 5;         % tirar o id do ROS Ter atenção ao id=0;
+        if j == 5                       % Tirar isto, só para não entrar nesta parte do código
+            id_seen = 5;                % tirar o id do ROS Ter atenção ao id=0;
             
             if Sigma(3*id_seen + 3) == 99E99 && Sigma(3*id_seen + 4) == 99E99   % Caso nunca tenha visto o landmark
     
                 X_predicted(3*id_seen + 3) = X_predicted(1) + d_observation * cos(phi_observation + X_predicted(3));
                 X_predicted(3*id_seen + 4) = X_predicted(2) + d_observation * sin(phi_observation + X_predicted(3)); 
-                % Inicializou-as com as coordenadas do robot + trig do aruco.
+                                         % Inicializou-as com as coordenadas do robot + trig do aruco.
         
             end
     
