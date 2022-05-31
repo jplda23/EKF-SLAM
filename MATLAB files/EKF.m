@@ -18,6 +18,11 @@ Fx = zeros(3, 2*N+3);                   % Matriz Desnecessária
 G = zeros(2*N+3, 2*N+3);                % Jaconiano da função de Movimento
 K = zeros(2*N+3, 2);                    % Kalman Gain
 
+time = Odometria(:,1);
+x = Odometria(:,2);
+y = Odometria(:,3);
+theta = Odometria(:,4);
+
 Q = [5^2 0;
     0 5^2];                             % Covariância sensores landmarks;
 
@@ -31,26 +36,26 @@ Fx(1,1) = 1;
 Fx(2,2) = 1;
 Fx(3,3) = 1;
 
-X_predicted(1) = Odometria(1,2);
-X_predicted(2) = Odometria(1,3);
-X_predicted(3) = Odometria(1,4);
+X_predicted(1) = x(1);
+X_predicted(2) = y(1);
+X_predicted(3) = theta(1);
 
-predictions_x = zeros(2*N+3, length(Odometria(:,1)));                  
-Kalman_gains = zeros(2*N+3, 2, length(Odometria(:,1)));
+predictions_x = zeros(2*N+3, length(time));                  
+Kalman_gains = zeros(2*N+3, 2, length(time));
 
 %% EKF
 
-for i = 2:length(Odometria(:,1))
+for i = 2:length(time)
 
-    delta_d = sqrt((Odometria(i,2) - Odometria(i-1,2))^2 + (Odometria(i,3) - Odometria(i-1,3))^2);
-    delta_theta = atan2(Odometria(i,3) - Odometria(i-1,3), Odometria(i,2) - Odometria(i-1,2));
-    dif_theta = Odometria(i,4) - Odometria(i-1,4);
+    delta_d = sqrt((x(i) - x(i-1))^2 + (y(i) - y(i-1))^2);
+    delta_theta = atan2(y(i) - y(i-1), x(i) - x(i-1));
+    dif_theta = theta(i) - theta(i-1);
 
     % Predict
     
     g_motion = [delta_d * cos(delta_theta);
                 delta_d * sin(delta_theta);
-               Odometria(i-1,4) + dif_theta];
+               theta(i-1) + dif_theta];
 
     G_motion = [0 0 -delta_d*sin(delta_theta);
                 0 0 delta_d*cos(delta_theta);
