@@ -1,4 +1,13 @@
-%% Inicialização
+%% Inicialize
+clear
+close all;
+clc
+
+%% Import Data
+load("data.mat"); %Get Rosbag Information
+%A = dlmread('landmarks.txt'); % Get Landmark Information
+
+%% Inicialize algorith
 
 N = 10;                                 % Número de Landmarks
 X_predicted = zeros(2*N+3, 1);          % Vetor de Estado
@@ -20,12 +29,12 @@ Fx(1,1) = 1;
 Fx(2,2) = 1;
 Fx(3,3) = 1;
 
-X_predicted(1) = xPoints(1);
-X_predicted(2) = yPoints(1);
-X_predicted(3) = theta(1);
+X_predicted(1) = Odometria(1,2);
+X_predicted(2) = Odometria(1,3);
+X_predicted(3) = Odometria(1,4);
 
-predictions_x = zeros(2*N+3, length(xPoints));                  
-Kalman_gains = zeros(2*N+3, 2, length(xPoints));
+predictions_x = zeros(2*N+3, length(Odometria));                  
+Kalman_gains = zeros(2*N+3, 2, length(Odometria));
 
 %% EKF
 
