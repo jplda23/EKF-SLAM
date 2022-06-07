@@ -87,7 +87,7 @@ for i = 1:length(delta_theta)-1
       X_predicted(3) = wrapTo2Pi(X_predicted(3));
       X_predicted_sem_landmarks = X_predicted;
 
-      G = eye(2*N+3) + Fx'*G_motion*Fx
+      G = eye(2*N+3) + Fx'*G_motion*Fx;
 
       reals_x(:, i+1) = X_real;
       predicted_sem_landmarks(:, i+1) = X_predicted_sem_landmarks;
@@ -100,7 +100,7 @@ for i = 1:length(delta_theta)-1
 
           if range < 0.2
            
-            phi = wrapTo2Pi(atan2(X_real(2) - landmarks(a, 2), X_real(1) - landmarks(a, 1)) - X_real(3))
+            phi = wrapTo2Pi(atan2(X_real(2) - landmarks(a, 2), X_real(1) - landmarks(a, 1)) - X_real(3));
             %aux_phi = phi / abs(phi);   
             %phi = mod(phi, aux_phi*2*pi)
             
@@ -116,7 +116,7 @@ for i = 1:length(delta_theta)-1
                 dy = X_predicted(2) - landmarks(a, 2);
                 range_estimated = sqrt((dx)^2 + (dy)^2);
 
-                phi_estimated = wrapTo2Pi(atan2(dy, dx) - X_predicted(3))
+                phi_estimated = wrapTo2Pi(atan2(dy, dx) - X_predicted(3));
                 %aux_phi_estimated = phi_estimated / abs(phi_estimated);
                 %phi_estimated = mod(phi_estimated, aux_phi_estimated*2*pi)
 
@@ -165,15 +165,15 @@ xlabel("X")
 ylabel("Y")
 title("Generated trajectory of the robot")
 
-figure()
-rectangle('Position',[0.1 0.1 0.35 0.65])
-axis([0 1.2 0 0.8])
-hold on
-plot(1:length(delta_theta),predictions_x(3,:))
-plot(1:length(delta_theta),reals_x(3,:))
-plot(1:length(delta_theta),predicted_sem_landmarks(3,:))
-scatter(landmarks(:,1), landmarks(:,2))
-legend('Trajectory', 'Real', 'Trajectory_no_landmarks')
-xlabel("X")
-ylabel("Y")
-title("Generated trajectory of the robot")
+% figure()
+% rectangle('Position',[0.1 0.1 0.35 0.65])
+% axis([0 1.2 0 0.8])
+% hold on
+% plot(1:length(delta_theta),predictions_x(3,:))
+% plot(1:length(delta_theta),reals_x(3,:))
+% plot(1:length(delta_theta),predicted_sem_landmarks(3,:))
+% scatter(landmarks(:,1), landmarks(:,2))
+% legend('Trajectory', 'Real', 'Trajectory_no_landmarks')
+% xlabel("X")
+% ylabel("Y")
+% title("Generated trajectory of the robot")
