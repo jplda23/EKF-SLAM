@@ -17,7 +17,7 @@ for i = 1:m
         mu(3+landmarkId*2)   = mu(2) + z(i).range * sin(wrapToPi(z(i).bearing+mu(3)));
 		
 		observedLandmarks(landmarkId) = true;
-    end
+end
 
     Z(i*2-1) = z(i).range;
     Z(i*2)   = z(i).bearing;

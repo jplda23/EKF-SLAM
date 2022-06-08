@@ -1,4 +1,4 @@
-function plot_state(pose, odom, pose_est, pose_nolandmark, mu, sigma, landmarks, timestep, observedLandmarks, z, window)
+function plot_state(real, odom, pose_nolandmark, mu, sigma, landmarks, timestep, observedLandmarks, z, window)
     % Visualizes the state of the EKF SLAM algorithm.
     %
     % The resulting plot displays the following information:
@@ -12,9 +12,9 @@ function plot_state(pose, odom, pose_est, pose_nolandmark, mu, sigma, landmarks,
     grid("on")
     L = struct2cell(landmarks); 
     drawprobellipse(mu(1:3), sigma(1:3,1:3), 0.6, 'r');
-    plot(pose.x, pose.y);
+    plot(real.x, real.y);
     plot(odom.x, odom.y);
-    plot(pose_est.x, pose_est.y);
+    %plot(pose_est.x, pose_est.y);
     plot(pose_nolandmark.x, pose_nolandmark.y);
     plot(cell2mat(L(2,:)), cell2mat(L(3,:)), 'k+', 'markersize', 10, 'linewidth', 5);
     for i=1:length(observedLandmarks)
@@ -23,16 +23,18 @@ function plot_state(pose, odom, pose_est, pose_nolandmark, mu, sigma, landmarks,
    	        drawprobellipse(mu(2*i+ 2:2*i+ 3), sigma(2*i+ 2:2*i+ 3,2*i+ 2:2*i+ 3), 0.6, 'b');
         end
     end
-
+    
     for i=1:size(z,2)
-	    mX = mu(2*z(i).id+2);
-	    mY = mu(2*z(i).id+3);
-    	line([mu(1), mX],[mu(2), mY], 'color', 'k', 'linewidth', 1);
+        if ~isnan(z.id)
+	        mX = mu(2*z(i).id+2);
+	        mY = mu(2*z(i).id+3);
+    	    line([mu(1), mX],[mu(2), mY], 'color', 'k', 'linewidth', 1);
+        end
     end
 
     drawrobot(mu(1:3), 'r', 3, 0.3, 0.3);
-    xlim([-2, 12])
-    ylim([-2, 12])
+    xlim([-4, 5])
+    ylim([-5, 3])
     hold off
 
     if window

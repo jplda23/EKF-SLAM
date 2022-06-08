@@ -21,7 +21,7 @@ function landmarks = read_world(filename)
         if ~ischar(line); break; end
         data = strsplit(line, ' ');
 
-        landmark = struct("id", str2double(data{1}), "x", str2double(data{2}), "y", str2double(data{3}));
+        landmark = struct("id", str2double(data{1})+1, "x", str2double(data{2}), "y", str2double(data{3}));
         landmarks(end+1) = landmark;
     end
 
