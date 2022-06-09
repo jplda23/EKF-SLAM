@@ -63,9 +63,9 @@ function data = read_data(filename)
             %odom.t  = str2double(arr{3});
             %odom.r2 = str2double(arr{4});
             % ADD EXTRA NOISE
-            odom.r1 = str2double(arr{2}) + rand(1)*0.02 - 0.01;
-            odom.t  = str2double(arr{3}) + rand(1)*0.2 - 0.1;
-            odom.r2 = str2double(arr{4}) + rand(1)*0.02 - 0.01;
+            odom.r1 = str2double(arr{2}) + wgn(1,1,-42);%rand(1)*0.02 - 0.01;
+            odom.t  = str2double(arr{3}) + wgn(1,1,-42);%rand(1)*0.2 - 0.1;
+            odom.r2 = str2double(arr{4}) + wgn(1,1,-42);%rand(1)*0.02 - 0.01;
         elseif(strcmp(type, 'SENSOR') == 1)
             reading = struct;
             reading.id      = str2double(arr{2});

@@ -184,18 +184,18 @@ saveas(gcf,"./imagens/trajectory/trajectory.png");
 % Long runtime - Avoid running if unnecessary - commented for safety
 % remove double '% %' to run the code Select + 'Ctrl - Shift - R' twice
 
-% % imageNames = dir(fullfile("imagens/camera2",'image_','*.png'));
-% % imageNames = {imageNames.name}';
-% % outputVideo = VideoWriter(fullfile("video",'shuttle_out.avi'));
-% % 
-% % %Choose the framerate of the video
-% % outputVideo.FrameRate = 10; 
-% % 
-% % open(outputVideo)
-% % 
-% % for ii = 1:size(msgs,1)
-% %    img = imread(fullfile("imagens/camera2","image_"+ii+".png"));
-% %    writeVideo(outputVideo,img)
-% % end
-% % 
-% % close(outputVideo)
+imageNames = dir(fullfile("imagens/camera",'image_','*.png'));
+imageNames = {imageNames.name}';
+outputVideo = VideoWriter(fullfile("video",'shuttle_out.avi'));
+
+%Choose the framerate of the video
+outputVideo.FrameRate = 10; 
+
+open(outputVideo)
+
+for ii = 1:size(msgs,1)
+   img = imread(fullfile("imagens/camera2","image_"+ii+".png"));
+   writeVideo(outputVideo,img)
+end
+
+close(outputVideo)

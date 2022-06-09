@@ -1,4 +1,4 @@
-function plot_state(pose, odom, pose_est, pose_nolandmark, mu, sigma, landmarks, timestep, observedLandmarks, z, window)
+function plot_state(pose, odom, pose_est, pose_nolandmark, mu, sigma, landmarks, timestep, observedLandmarks, z, window,t)
     % Visualizes the state of the EKF SLAM algorithm.
     %
     % The resulting plot displays the following information:
@@ -33,6 +33,7 @@ function plot_state(pose, odom, pose_est, pose_nolandmark, mu, sigma, landmarks,
     drawrobot(mu(1:3), 'r', 3, 0.3, 0.3);
     xlim([-2, 12])
     ylim([-2, 12])
+    saveas(gcf,"./imagens/camera/image_"+t+".png");
     hold off
 
     if window
