@@ -147,37 +147,37 @@ saveas(gcf,"./imagens/trajectory/trajectory.png");
 % long runtime - Avoid running if unnecessary - commented for safety
 % remove double '% %' to run the code Select + 'Ctrl - Shift - R' twice
 
-% % startT = bag.StartTime;
-% % endT = bag.EndTime;
-% % depthLim =1000; %remove all depth data greater than depthLim
-% % dataType = {'/head_camera/rgb/image_raw';'/head_camera/depth_registered/points';'/neck_camera/depth/image_raw'};    
-% % 
-% % for i=2
-% %     dataT=dataType{i};
-% %     bagselect1 = select(bag, 'Topic', dataT);
-% %     bagselect2 = select(bag, 'Time', [startT  endT], 'Topic', dataT);
-% %     bagselect3 = select(bagselect2, 'Time', [startT  endT]);
-% %     msgs = readMessages(bagselect3);
-% %     msgs{1};
-% %     for j=1:size(msgs,1)
-% %         [img,alpha] = readImage(msgs{j});
-% %         try
-% %             figure(1)
-% %             imshow(img,[min(min(img)) max(max(img))/10]);colormap(jet)
-% %             img=double(img);
-% %             img(img>depthLim)=0; 
-% %             img(img==0)=NaN; % get rid of spurious data from mesh plot
-% %             figure(2); mesh(img)
-% %         catch
-% %             figure(3);
-% %             imshow(img);
-% %             saveas(gcf,"./imagens/camera2/image_"+j+".png");
-% %         end
-% %         clear img
-% %     end
-% % end
-% % close all
-% % 
+startT = bag.StartTime;
+endT = bag.EndTime;
+depthLim =1000; %remove all depth data greater than depthLim
+dataType = {'/head_camera/rgb/image_raw';'/head_camera/depth_registered/points';'/neck_camera/depth/image_raw'};    
+
+for i=2
+    dataT=dataType{i};
+    bagselect1 = select(bag, 'Topic', dataT);
+    bagselect2 = select(bag, 'Time', [startT  endT], 'Topic', dataT);
+    bagselect3 = select(bagselect2, 'Time', [startT  endT]);
+    msgs = readMessages(bagselect3);
+    msgs{1};
+    for j=1:size(msgs,1)
+        [img,alpha] = readImage(msgs{j});
+        try
+            figure(1)
+            imshow(img,[min(min(img)) max(max(img))/10]);colormap(jet)
+            img=double(img);
+            img(img>depthLim)=0; 
+            img(img==0)=NaN; % get rid of spurious data from mesh plot
+            figure(2); mesh(img)
+        catch
+            figure(3);
+            imshow(img);
+            saveas(gcf,"./imagens/camera2/image_"+j+".png");
+        end
+        clear img
+    end
+end
+close all
+
 
 %% Make a video of the robots' prespective
 % Uses the previous images to make a video

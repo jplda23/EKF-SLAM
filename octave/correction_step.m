@@ -11,6 +11,7 @@ H = [];
 
 for i = 1:m
 	landmarkId = z(i).id;
+    z(i).bearing = z(i).bearing*pi/180;
 
 	if(observedLandmarks(landmarkId)==false)
         mu(3+landmarkId*2-1) = mu(1) + z(i).range * cos(wrapToPi(z(i).bearing+mu(3)));
