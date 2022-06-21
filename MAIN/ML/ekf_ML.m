@@ -12,6 +12,7 @@ function debug = ekf_ML(odom_data, sensor_data, landmarks, real, odom)
     % and the landmark poses (xi, yi) are stacked in ascending id order.
     % sigma: (2N+3)x(2N+3) covariance matrix of the normal distribution
     mu = zeros(3, 1);
+    mu(1) = 0.5; mu(2) = 0.5;
     
     sigma = zeros(3);
     

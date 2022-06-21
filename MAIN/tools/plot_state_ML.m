@@ -30,8 +30,8 @@ function plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, timestep, obs
 %     end
 
     drawrobot(mu(1:3), 'r', 3, 0.3, 0.3);
-    xlim([-2, 12])
-    ylim([-2, 12])
+    xlim([-5, 5])
+    ylim([-5, 5])
     hold off
 
     if window

@@ -11,10 +11,11 @@ addpath('data');
 addpath('Simulador');
 addpath('EKF');
 addpath('ML');
+addpath('Real');
 
 %set to true if microsimulator; set to false if real data.
 microsim_flag = true;
-ML_flag = true;
+ML_flag = false;
 
 %% Directory creation
 if ~exist('./imagens', 'dir')
@@ -36,6 +37,8 @@ if (microsim_flag)
     [odom_data] = read_data_sim('real_odom_sim.mat');
     load('sensor_data_sim.mat');
 else
+%     rosbag_name = 'long_run.bag';
+%     rosbag(rosbag_name);
     landmarks_file = 'landmarks.dat';
     fileID = fopen(landmarks_file,'r');
     [landmarks,~] = fscanf(fileID, ['%d' '%f' '%f' '\n'],[3,Inf]);
@@ -43,8 +46,7 @@ else
     fclose(fileID);
 
     % Read sensor readings, i.e. odometry and range-bearing sensor
-    [odom_data, ~] = read_data('newRealvsOdom.mat', 'sensor_data.mat');
-    sensor_data = odom_data;
+    [odom_data, ~] = read_data('RealvsOdom3.mat', 'sensor_data3.mat');
 end
 
 
@@ -65,12 +67,21 @@ end
 
 %% RUN EKF
 
+%simulation data
 if(microsim_flag)
-    if (~ML_flag)
+    if (~ML_flag) %LANDMARKS WITH ID's
         [saved_mu, saved_sigma,pose_nolandmark] = ekf_function(odom_data.timestep, sensor_data, landmarks, real, odom);    
     
-    elseif (ML_flag)
+    elseif (ML_flag) %LANDMARKS WITHOUT ID's
         debug = ekf_ML(odom_data.timestep, sensor_data, landmarks, real, odom);
+    end
+%real data
+elseif(~microsim_flag)
+    if (~ML_flag) %LANDMARKS WITH ID's
+        [saved_mu, saved_sigma,pose_nolandmark] = ekf_function(odom_data.timestep, odom_data.timestep, landmarks, real, odom);   
+
+    elseif (ML_flag) %LANDMARKS WITHOUT ID's
+        debug = ekf_ML(odom_data.timestep, odom_data.timestep, landmarks, real, odom);
     end
 end
 

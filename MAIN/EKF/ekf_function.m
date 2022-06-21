@@ -4,7 +4,7 @@ function [saved_mu, saved_sigma, pose_est] = ekf_function(odom_data, sensor_data
 
     showGui = true;  % show a window while the algorithm runs
 
-    INF = 9999;
+    INF = 20;
 
     N = length(landmarks);
     

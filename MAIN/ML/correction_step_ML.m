@@ -57,7 +57,7 @@ for i = 1:m %landmarks vistas
     
   end
 
-  pik(N+1,1) = 5e-3;
+  pik(N+1,1) = 8e-3;
   [~, k] = min(pik);
 
   N_new = max([k; N]);

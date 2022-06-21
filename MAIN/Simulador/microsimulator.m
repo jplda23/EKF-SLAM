@@ -75,10 +75,10 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
             % SENSOR ESTIMATION
             empty = 1;
             for l = 1:length(landmarks)
-                range = sqrt((landmarks(l,2) - Real(j,2))^2 + (landmarks(l,3) - Real(j,3))^2);
+                range = sqrt((landmarks(l,2) - Real(j,2))^2 + (landmarks(l,3) - Real(j,3))^2) + wgn(1,1,-42);
     
                 if(range < line_of_sight)                
-                    bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2));
+                    bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2)) + wgn(1,1,-42);
     
                     if abs(bearing) < alpha
                         reading = struct;
@@ -110,6 +110,10 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
     
     end
 
+    % Make noise more uniforme.
+%         Odometria(:,2) = Real(:,2) + 1;%wgn(1,1,-10); 
+%         Odometria(:,3) = Real(:,3) + 1;%wgn(1,1,-10);
+%         Odometria(:,4) = Real(:,4) + wgn(1,1,-10);
 
     save('./Simulador/real_odom_sim.mat',"Real","Odometria");
     save('./Simulador/sensor_data_sim',"sensor_data");
