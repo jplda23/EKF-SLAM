@@ -13,7 +13,6 @@ function plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, timestep, obs
     drawprobellipse(mu(1:3), sigma(1:3,1:3), 0.6, 'r');
     plot(real.x, real.y);
     plot(odom.x, odom.y);
-%     plot(pose_est.x, pose_est.y);
     plot(pose_est.x, pose_est.y);
     plot(landmarks(:,2), landmarks(:,3), 'k+', 'markersize', 6, 'linewidth', 4);
 %     for i=1:length(observedLandmarks)
@@ -30,8 +29,8 @@ function plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, timestep, obs
 %     end
 
     drawrobot(mu(1:3), 'r', 3, 0.3, 0.3);
-    xlim([-5, 5])
-    ylim([-5, 5])
+    xlim([-4, 6])
+    ylim([-4, 6])
     hold off
 
     if window

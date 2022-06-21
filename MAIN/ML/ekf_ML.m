@@ -30,6 +30,7 @@ function debug = ekf_ML(odom_data, sensor_data, landmarks, real, odom)
     debug = struct('iteracao', cell(1,1), 'vistos_agora', cell(1,1), 'tinham_sido_vistos_qm', cell(1,1), 'vistos_total', cell(1,1), 'N_ML', cell(1,1), 'N_real', cell(1,1), 'pi', cell(1,1), 'mu', cell(1,1), 'mu_landmarks_position', cell(1,1), 'thought_seen_landmarks', cell(1,1));
     
     mul = [];
+    j=1;
     
     for t = 1:size(odom_data, 2)
     %for t = 1:80
@@ -46,16 +47,18 @@ function debug = ekf_ML(odom_data, sensor_data, landmarks, real, odom)
         
             [Total_seen_landmarks, had_it_been_seen_before, N_real, mul] = seen_before(Total_seen_landmarks, SeenLandmarks, mul);
         
-            debug(t).iteracao = t;
-            debug(t).vistos_agora = SeenLandmarks;
-            debug(t).tinham_sido_vistos_qm = had_it_been_seen_before;
-            debug(t).vistos_total = Total_seen_landmarks;
-            debug(t).N_ML = N_ML;
-            debug(t).N_real = N_real;
-            debug(t).pi = pik;
-            debug(t).mu = mu;
-            debug(t).mu_landmarks_position = mul;
-            debug(t).thought_seen_landmarks = indexes;
+            debug(j).iteracao = t;
+            debug(j).vistos_agora = SeenLandmarks;
+            debug(j).tinham_sido_vistos_qm = had_it_been_seen_before;
+            debug(j).vistos_total = Total_seen_landmarks;
+            debug(j).N_ML = N_ML;
+            debug(j).N_real = N_real;
+            debug(j).pi = pik;
+            debug(j).mu = mu;
+            debug(j).mu_landmarks_position = mul;
+            debug(j).thought_seen_landmarks = indexes;
+
+            j = j+1;
 
         end
         

@@ -14,8 +14,8 @@ addpath('ML');
 addpath('Real');
 
 %set to true if microsimulator; set to false if real data.
-microsim_flag = true;
-ML_flag = false;
+microsim_flag = false;
+ML_flag = true;
 
 %% Directory creation
 if ~exist('./imagens', 'dir')
