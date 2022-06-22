@@ -75,10 +75,10 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
             % SENSOR ESTIMATION
             empty = 1;
             for l = 1:length(landmarks)
-                range = sqrt((landmarks(l,2) - Real(j,2))^2 + (landmarks(l,3) - Real(j,3))^2) + wgn(1,1,-42);
+                range = sqrt((landmarks(l,2) - Real(j,2))^2 + (landmarks(l,3) - Real(j,3))^2);% + wgn(1,1,-42);
     
                 if(range < line_of_sight)                
-                    bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2)) + wgn(1,1,-42);
+                    bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2));% + wgn(1,1,-42);
     
                     if abs(bearing) < alpha
                         reading = struct;

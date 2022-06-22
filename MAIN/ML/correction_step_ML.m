@@ -25,7 +25,7 @@ for i = 1:m %landmarks vistas
 
     mu_provisorio = [mu; zeros(2,1)];
     sigma_provisorio = [sigma zeros(2*N+3, 2);
-                        zeros(2, 2*N+3) Q]; % Dúvida para o prof: O que meter em lugar do Q (antes estava INF) e nos zeros
+                        zeros(2, 2*N+3) ]; 
 
     % O seu valor é adicionado na última posição do vetor de estados (N+1)
     mu_provisorio(2*N+3 + 1) = mu(1) + z(i).range * cos(wrapToPi(z(i).bearing+mu(3)));

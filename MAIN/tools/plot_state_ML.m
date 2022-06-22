@@ -1,20 +1,13 @@
 function plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, timestep, observedLandmarks, z, window)
-    % Visualizes the state of the EKF SLAM algorithm.
-    %
-    % The resulting plot displays the following information:
-    % - map ground truth (black +'s)
-    % - current robot pose estimate (red)
-    % - current landmark pose estimates (blue)
-    % - visualization of the observations made at this time step (line between robot and landmark)
 
     clf;
     hold on
     grid("on")
-    drawprobellipse(mu(1:3), sigma(1:3,1:3), 0.6, 'r');
+    drawprobellipse(mu(1:3), sigma(1:3,1:3), 0.6, [0 0.75 1]);
     plot(real.x, real.y);
     plot(odom.x, odom.y);
     plot(pose_est.x, pose_est.y);
-    plot(landmarks(:,2), landmarks(:,3), 'k+', 'markersize', 6, 'linewidth', 4);
+    plot(landmarks(:,2), landmarks(:,3), 'ks', 'markersize', 10, 'linewidth', 2);
 %     for i=1:length(observedLandmarks)
 % 	    if observedLandmarks(i)
 % 	        plot(mu(2*i+ 2),mu(2*i+ 3), 'bo', 'markersize', 10, 'linewidth', 5)
@@ -28,9 +21,9 @@ function plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, timestep, obs
 %     	line([mu(1), mX],[mu(2), mY], 'color', 'k', 'linewidth', 1);
 %     end
 
-    drawrobot(mu(1:3), 'r', 3, 0.3, 0.3);
-    xlim([-4, 6])
-    ylim([-4, 6])
+    drawrobot(mu(1:3), 0.3);
+%     xlim([-4, 4.5])
+%     ylim([-4, 2.5])
     hold off
 
     if window

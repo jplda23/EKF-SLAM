@@ -14,7 +14,7 @@ addpath('ML');
 addpath('Real');
 
 %set to true if microsimulator; set to false if real data.
-microsim_flag = false;
+microsim_flag = true;
 ML_flag = true;
 
 %% Directory creation
@@ -31,8 +31,8 @@ end
 %% DATA TREATMENT
 
 if (microsim_flag)
-    waypoints_file = 'waypoints.dat';
-    landmarks_file = 'landmarks_sim.dat';
+    waypoints_file = 'waypoints2.dat';
+    landmarks_file = 'landmarks_sim2.dat';
     landmarks = microsimulator(waypoints_file,landmarks_file);
     [odom_data] = read_data_sim('real_odom_sim.mat');
     load('sensor_data_sim.mat');
@@ -70,18 +70,26 @@ end
 %simulation data
 if(microsim_flag)
     if (~ML_flag) %LANDMARKS WITH ID's
-        [saved_mu, saved_sigma,pose_nolandmark] = ekf_function(odom_data.timestep, sensor_data, landmarks, real, odom);    
+        1
+        [saved_mu, saved_sigma, pose_nolandmark] = ekf_function(odom_data.timestep, sensor_data, landmarks, real, odom); 
+        error_calculation(real, odom, saved_mu, landmarks); 
     
     elseif (ML_flag) %LANDMARKS WITHOUT ID's
-        debug = ekf_ML(odom_data.timestep, sensor_data, landmarks, real, odom);
+        2
+        [debug, saved_mu, saved_sigma, lnd_order] = ekf_ML(odom_data.timestep, sensor_data, landmarks, real, odom);
+        error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order);
     end
 %real data
 elseif(~microsim_flag)
     if (~ML_flag) %LANDMARKS WITH ID's
-        [saved_mu, saved_sigma,pose_nolandmark] = ekf_function(odom_data.timestep, odom_data.timestep, landmarks, real, odom);   
+        3
+        [saved_mu, saved_sigma, pose_nolandmark] = ekf_function(odom_data.timestep, odom_data.timestep, landmarks, real, odom);
+        error_calculation(real, odom, saved_mu, landmarks); 
 
     elseif (ML_flag) %LANDMARKS WITHOUT ID's
-        debug = ekf_ML(odom_data.timestep, odom_data.timestep, landmarks, real, odom);
+        4
+        [debug, saved_mu, saved_sigma, lnd_order] = ekf_ML(odom_data.timestep, odom_data.timestep, landmarks, real, odom);
+        error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order);
     end
 end
 
@@ -109,13 +117,3 @@ if (make_video)
     
     close(outputVideo)
 end
-
-
-
-
-
-
-
-
-
-

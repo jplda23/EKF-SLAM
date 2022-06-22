@@ -1,10 +1,12 @@
-function debug = ekf_ML(odom_data, sensor_data, landmarks, real, odom)
+function [debug, saved_mu, saved_sigma, mul] = ekf_ML(odom_data, sensor_data, landmarks, real, odom)
 
     INF = 9999;
     
     N = length(landmarks);
     
     observedLandmarks = false(1,N);
+
+    saved_mu = zeros (2*N + 3);
     
     % Initialize belief:
     % mu: 2N+3x1 vector representing the mean of the normal distribution
@@ -33,7 +35,6 @@ function debug = ekf_ML(odom_data, sensor_data, landmarks, real, odom)
     j=1;
     
     for t = 1:size(odom_data, 2)
-    %for t = 1:80
     
         % Perform the prediction step of the EKF
         [mu, sigma] = prediction_step_ML(mu, sigma, odom_data(t).odometry, t == 1);
@@ -46,6 +47,7 @@ function debug = ekf_ML(odom_data, sensor_data, landmarks, real, odom)
             N_ML = (length(mu)-3)/2;
         
             [Total_seen_landmarks, had_it_been_seen_before, N_real, mul] = seen_before(Total_seen_landmarks, SeenLandmarks, mul);
+
         
             debug(j).iteracao = t;
             debug(j).vistos_agora = SeenLandmarks;
@@ -62,7 +64,11 @@ function debug = ekf_ML(odom_data, sensor_data, landmarks, real, odom)
 
         end
         
+        %Para isto estou a dar a dimensão certa ao 'saved_mu' porque só serve para o plot
         pose_est.x(t) = mu(1); pose_est.y(t) = mu(2);
+        saved_mu(:,t) = [mu; zeros(2*N + 3 - length(mu), 1)];
+        saved_sigma{t} = sigma;
+
         % Generate visualization plots of the current state of the filter
         plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, t, observedLandmarks, sensor_data(t).sensor, showGui);
     
