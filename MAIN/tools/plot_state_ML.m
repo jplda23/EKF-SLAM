@@ -3,12 +3,14 @@ function plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, timestep, N_M
     clf;
     hold on
     grid("on")
+    h1 = plot(real.x, real.y);
+    h2 = plot(odom.x, odom.y);
+    h2 = plot(pose_est.x, pose_est.y);
+    h4 = plot(landmarks(:,2), landmarks(:,3), 'ks', 'markersize', 10, 'linewidth', 2);
+    legend("Real Trajectory","Odometry","Estimated Position","Landmarks")
     drawprobellipse(mu(1:3), sigma(1:3,1:3), 0.6, [0 0.75 1]);
-    plot(real.x, real.y);
-    plot(odom.x, odom.y);
-    plot(pose_est.x, pose_est.y);
-    plot(landmarks(:,2), landmarks(:,3), 'ks', 'markersize', 10, 'linewidth', 2);
-    
+    xlabel("x(m)")
+    ylabel("y(m)")
     
     for i=1:N_ML
         plot(mu(2*i+ 2),mu(2*i+ 3), 'ro', 'markersize', 10, 'linewidth', 2)
@@ -22,6 +24,7 @@ function plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, timestep, N_M
 %     end
 
     drawrobot(mu(1:3), 0.3);
+    legend([h1 h2 h3 h4],{'Real Trajectory','Odometry','Estimated Position','Landmarks'})
     xlim([-8, 8])
     ylim([-10, 5])
     hold off

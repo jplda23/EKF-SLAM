@@ -20,7 +20,7 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
     %of alpha at a minimum distance of line_of_sight.
     
     %simulation parameters
-    sample_freq = 20; % Hz %sample frequency
+    sample_freq = 10; % Hz %sample frequency
     robot_vel = 0.5; % m/s %robot velocity
     
     sim_time = 30; %seg %maximum simulation time

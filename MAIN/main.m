@@ -102,24 +102,25 @@ end
 make_video = false; %Change to true if you want to make a video
 
 if (make_video)
-    imageNames = dir(fullfile("imagens/camera",'image_','*.png'));
-    imageNames = {imageNames.name}';
-    outputVideo = VideoWriter(fullfile("/imagens",'shuttle_out.avi'));
-    
-    %Choose the framerate of the video
-    outputVideo.FrameRate = 10; 
-    
-    open(outputVideo)
-    
-    for ii = 1:664%length(odom_data.timestep)
-       img = imread(fullfile("imagens/camera","image_"+ii+".png"));
-       writeVideo(outputVideo,img)
-    end
-    
-    close(outputVideo)
+%     imageNames = dir(fullfile("imagens/camera",'image_','*.png'));
+%     imageNames = {imageNames.name}';
+%     outputVideo = VideoWriter(fullfile("/imagens",'shuttle_out.avi'));
+%     
+%     %Choose the framerate of the video
+%     outputVideo.FrameRate = 10; 
+%     
+%     open(outputVideo)
+%     
+%     for ii = 1:664%length(odom_data.timestep)
+%        img = imread(fullfile("imagens/camera","image_"+ii+".png"));
+%        writeVideo(outputVideo,img)
+%     end
+%     
+%     close(outputVideo)
+
     video = VideoWriter('yourvideo.avi'); %create the video object
     open(video); %open the file for writing
-    for ii=1:664 %where N is the number of images
+    for ii=1:length(odom_data.timestep) %where N is the number of images
       I = imread(fullfile("imagens/camera","image_"+ii+".png")); %read the next image
       writeVideo(video,I); %write the image to file
     end
