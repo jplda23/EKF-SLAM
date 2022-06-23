@@ -16,7 +16,7 @@ addpath('Real');
 
 %set to true if microsimulator; set to false if real data.
 microsim_flag = true;
-ML_flag = true;
+ML_flag = false;
 
 %% Directory creation
 if ~exist('./imagens', 'dir')
@@ -99,7 +99,7 @@ end
 % Uses the previous images to make a video
 % Long runtime - Avoid running if unnecessary - used make_video for flag
 
-make_video = true; %Change to true if you want to make a video
+make_video = false; %Change to true if you want to make a video
 
 if (make_video)
 %     imageNames = dir(fullfile("imagens/camera",'image_','*.png'));
