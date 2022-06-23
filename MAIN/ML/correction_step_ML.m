@@ -12,8 +12,8 @@ seen_ids = zeros(m,1);
 
 indexes = size(m,1);
 
-Q = eye(2) .* 10;
-Qm = eye(2*m) .* 10;
+Q = eye(2) .* 0.1;
+Qm = eye(2*m) .* 0.1;
 
 H = [];
 pim = [];
@@ -25,7 +25,7 @@ for i = 1:m %landmarks vistas
 
     mu_provisorio = [mu; zeros(2,1)];
     sigma_provisorio = [sigma zeros(2*N+3, 2);
-                        zeros(2, 2*N+3) ]; 
+                        zeros(2, 2*N+3) sigma(1:2, 1:2)]; 
 
     % O seu valor é adicionado na última posição do vetor de estados (N+1)
     mu_provisorio(2*N+3 + 1) = mu(1) + z(i).range * cos(wrapToPi(z(i).bearing+mu(3)));
