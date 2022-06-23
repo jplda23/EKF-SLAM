@@ -2,7 +2,7 @@
 
 function [saved_mu, saved_sigma, pose_est] = ekf_function(odom_data, sensor_data, landmarks, real, odom)
 
-    showGui = false;  % show a window while the algorithm runs
+    showGui = true;  % show a window while the algorithm runs
 
     INF = 20;
 
@@ -43,8 +43,10 @@ function [saved_mu, saved_sigma, pose_est] = ekf_function(odom_data, sensor_data
         saved_sigma{t} = sigma;
 
         % Generate visualization plots of the current state of the filter
-        plot_state(real, odom, pose_est, mu, sigma, landmarks, t, observedLandmarks, sensor_data(t).sensor, showGui);
-
+        if t == length(odom_data)
+            plot_state(real, odom, pose_est, mu, sigma, landmarks, t, observedLandmarks, sensor_data(t).sensor, showGui);
+        end
+      
     end
 
 end

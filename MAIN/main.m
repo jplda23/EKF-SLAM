@@ -16,7 +16,7 @@ addpath('Real');
 
 %set to true if microsimulator; set to false if real data.
 microsim_flag = true;
-ML_flag = false;
+ML_flag = true;
 
 %% Directory creation
 if ~exist('./imagens', 'dir')
@@ -47,7 +47,7 @@ else
     fclose(fileID);
 
     % Read sensor readings, i.e. odometry and range-bearing sensor
-    [odom_data, ~] = read_data('RealvsOdom3.mat', 'sensor_data3.mat');
+    [odom_data, ~] = read_data('RealvsOdom2.mat', 'sensor_data2.mat');
 end
 
 
@@ -77,7 +77,7 @@ if(microsim_flag)
     
     elseif (ML_flag) %LANDMARKS WITHOUT ID's
         
-        [debug, saved_mu, saved_sigma, lnd_order] = ekf_ML(odom_data.timestep, sensor_data, landmarks, real, odom);
+        [debug, saved_mu, saved_sigmas, lnd_order] = ekf_ML(odom_data.timestep, sensor_data, landmarks, real, odom);
         error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order);
     end
 %real data
@@ -89,8 +89,8 @@ elseif(~microsim_flag)
 
     elseif (ML_flag) %LANDMARKS WITHOUT ID's
         
-        [debug, saved_mu, saved_sigma, lnd_order] = ekf_ML(odom_data.timestep, odom_data.timestep, landmarks, real, odom);
-        error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order);
+        [debug, saved_mu, saved_sigmas, lnd_order] = ekf_ML(odom_data.timestep, odom_data.timestep, landmarks, real, odom);
+%         error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order);
     end
 end
 
@@ -118,7 +118,7 @@ if (make_video)
 %     
 %     close(outputVideo)
 
-    video = VideoWriter('newvideo.avi'); %create the video object
+    video = VideoWriter('mlvideo.avi'); %create the video object
     open(video); %open the file for writing
     for ii=1:length(odom_data.timestep) %where N is the number of images
       I = imread(fullfile("imagens/camera","image_"+ii+".png")); %read the next image

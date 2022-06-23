@@ -6,7 +6,6 @@ function [debug, saved_mu, saved_sigma, mul] = ekf_ML(odom_data, sensor_data, la
     
     observedLandmarks = false(1,N);
 
-    saved_mu = zeros (2*N + 3);
     
     % Initialize belief:
     % mu: 2N+3x1 vector representing the mean of the normal distribution
@@ -15,15 +14,17 @@ function [debug, saved_mu, saved_sigma, mul] = ekf_ML(odom_data, sensor_data, la
     % sigma: (2N+3)x(2N+3) covariance matrix of the normal distribution
     mu = zeros(3, 1);
     mu(1) = 0.5; mu(2) = 0.5;
+    saved_sigma = cell(length(odom_data),1);
     
     sigma = zeros(3);
 
     N_ML = 0;
     
     pose_est = struct('x', 0, 'y', 0, 'theta', 0);
+    saved_mu = zeros (2*N + 3);
          
     % toogle the visualization type
-    showGui = true;  % show a window while the algorithm runs
+    showGui = false;  % show a window while the algorithm runs
     %showGui = false; % plot to files instead
     
     iteracao = zeros(size(odom_data, 2), 1);
@@ -64,16 +65,18 @@ function [debug, saved_mu, saved_sigma, mul] = ekf_ML(odom_data, sensor_data, la
 
             j = j+1;
 
+
         end
+        saved_mu(:,t) = [mu; zeros(2*N + 3 - length(mu), 1)];
+        saved_sigma{t} = sigma;
         
         %Para isto estou a dar a dimensão certa ao 'saved_mu' porque só serve para o plot
         pose_est.x(t) = mu(1); pose_est.y(t) = mu(2);
-        saved_mu(:,t) = [mu; zeros(2*N + 3 - length(mu), 1)];
-        saved_sigma{t} = sigma;
 
         % Generate visualization plots of the current state of the filter
-        plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, t, N_ML, sensor_data(t).sensor, showGui);
-    
+%         if t == length(odom_data)
+            plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, t, N_ML, sensor_data(t).sensor, showGui);
+%         end
     end
 
 end
