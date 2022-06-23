@@ -4,6 +4,7 @@
 % clear all variables and close all windows
 clear all;
 close all;
+clc
 
 % Make tools available
 addpath('tools');
@@ -15,7 +16,7 @@ addpath('Real');
 
 %set to true if microsimulator; set to false if real data.
 microsim_flag = true;
-ML_flag = true;
+ML_flag = false;
 
 %% Directory creation
 if ~exist('./imagens', 'dir')
@@ -31,8 +32,8 @@ end
 %% DATA TREATMENT
 
 if (microsim_flag)
-    waypoints_file = 'waypoints2.dat';
-    landmarks_file = 'landmarks_sim2.dat';
+    waypoints_file = 'waypoints3.dat';
+    landmarks_file = 'landmarks_sim3.dat';
     landmarks = microsimulator(waypoints_file,landmarks_file);
     [odom_data] = read_data_sim('real_odom_sim.mat');
     load('sensor_data_sim.mat');
@@ -70,24 +71,24 @@ end
 %simulation data
 if(microsim_flag)
     if (~ML_flag) %LANDMARKS WITH ID's
-        1
+       
         [saved_mu, saved_sigma, pose_nolandmark] = ekf_function(odom_data.timestep, sensor_data, landmarks, real, odom); 
         error_calculation(real, odom, saved_mu, landmarks); 
     
     elseif (ML_flag) %LANDMARKS WITHOUT ID's
-        2
+        
         [debug, saved_mu, saved_sigma, lnd_order] = ekf_ML(odom_data.timestep, sensor_data, landmarks, real, odom);
         error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order);
     end
 %real data
 elseif(~microsim_flag)
     if (~ML_flag) %LANDMARKS WITH ID's
-        3
+        
         [saved_mu, saved_sigma, pose_nolandmark] = ekf_function(odom_data.timestep, odom_data.timestep, landmarks, real, odom);
         error_calculation(real, odom, saved_mu, landmarks); 
 
     elseif (ML_flag) %LANDMARKS WITHOUT ID's
-        4
+        
         [debug, saved_mu, saved_sigma, lnd_order] = ekf_ML(odom_data.timestep, odom_data.timestep, landmarks, real, odom);
         error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order);
     end
@@ -98,22 +99,31 @@ end
 % Uses the previous images to make a video
 % Long runtime - Avoid running if unnecessary - used make_video for flag
 
-make_video = false; %Change to true if you want to make a video
+make_video = true; %Change to true if you want to make a video
 
 if (make_video)
-    imageNames = dir(fullfile("imagens/camera",'image_','*.png'));
-    imageNames = {imageNames.name}';
-    outputVideo = VideoWriter(fullfile("/imagens/video",'shuttle_out.avi'));
-    
-    %Choose the framerate of the video
-    outputVideo.FrameRate = 10; 
-    
-    open(outputVideo)
-    
-    for ii = 1:length(odom_data.timestep)
-       img = imread(fullfile("imagens/camera","image_"+ii+".png"));
-       writeVideo(outputVideo,img)
+%     imageNames = dir(fullfile("imagens/camera",'image_','*.png'));
+%     imageNames = {imageNames.name}';
+%     outputVideo = VideoWriter(fullfile("/imagens",'shuttle_out.avi'));
+%     
+%     %Choose the framerate of the video
+%     outputVideo.FrameRate = 10; 
+%     
+%     open(outputVideo)
+%     
+%     for ii = 1:664%length(odom_data.timestep)
+%        img = imread(fullfile("imagens/camera","image_"+ii+".png"));
+%        writeVideo(outputVideo,img)
+%     end
+%     
+%     close(outputVideo)
+
+    video = VideoWriter('newvideo.avi'); %create the video object
+    open(video); %open the file for writing
+    for ii=1:length(odom_data.timestep) %where N is the number of images
+      I = imread(fullfile("imagens/camera","image_"+ii+".png")); %read the next image
+      writeVideo(video,I); %write the image to file
     end
-    
-    close(outputVideo)
+    close(video); %close the file
 end
+
