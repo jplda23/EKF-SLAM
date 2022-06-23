@@ -25,7 +25,7 @@ for i = 1:m %landmarks vistas
 
     mu_provisorio = [mu; zeros(2,1)];
     sigma_provisorio = [sigma zeros(2*N+3, 2);
-                        zeros(2, 2*N+3) ]; 
+                        zeros(2, 2*N+3) Q]; 
 
     % O seu valor é adicionado na última posição do vetor de estados (N+1)
     mu_provisorio(2*N+3 + 1) = mu(1) + z(i).range * cos(wrapToPi(z(i).bearing+mu(3)));
@@ -57,7 +57,7 @@ for i = 1:m %landmarks vistas
     
   end
 
-  pik(N+1,1) = 3.5e-2;
+  pik(N+1,1) = 0.01;%3.5e-2;
   [~, k] = min(pik);
 
   N_new = max([k; N]);

@@ -20,15 +20,15 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
     %of alpha at a minimum distance of line_of_sight.
     
     %simulation parameters
-    sample_freq = 10; % Hz %sample frequency
+    sample_freq = 20; % Hz %sample frequency
     robot_vel = 0.5; % m/s %robot velocity
     
     sim_time = 30; %seg %maximum simulation time
     init_time = 0; %seg %initial simulation time
     
     %sensor parameters
-    line_of_sight = 2; %m
-    alpha = pi/3; %radius of observation for the camera
+    line_of_sight = 5; %m
+    alpha = pi/2; %radius of observation for the camera
     
     %Create Real data matrix
     Real = zeros(sim_time*sample_freq,4);
@@ -80,7 +80,7 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
                 if(range < line_of_sight)                
                     bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2));% + wgn(1,1,-42);
     
-                    if abs(bearing) < alpha
+                    if (-alpha < bearing) && (bearing < alpha)
                         reading = struct;
                         reading.time    = Real(j,1);
                         reading.id      = landmarks(l,1);

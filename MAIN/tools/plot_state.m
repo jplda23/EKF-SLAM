@@ -9,7 +9,7 @@ function plot_state(real, odom, pose_est, mu, sigma, landmarks, timestep, observ
     plot(pose_est.x, pose_est.y);
     plot(landmarks(:,2), landmarks(:,3), 'ks', 'markersize', 10, 'linewidth', 2);
     for i=1:length(observedLandmarks)
-	    if observedLandmarks(i)
+        if observedLandmarks(i)
 	        plot(mu(2*i+ 2),mu(2*i+ 3), 'ro', 'markersize', 10, 'linewidth', 2)
    	        drawprobellipse(mu(2*i+ 2:2*i+ 3), sigma(2*i+ 2:2*i+ 3,2*i+ 2:2*i+ 3), 0.6, 'r');
         end
@@ -24,8 +24,8 @@ function plot_state(real, odom, pose_est, mu, sigma, landmarks, timestep, observ
     end
 
     drawrobot(mu(1:3), 0.3);
-%     xlim([-4, 4.5])
-%     ylim([-5, 2.5])
+    xlim([-2, 12])
+    ylim([-2, 12])
     hold off
 
     if window
@@ -33,8 +33,6 @@ function plot_state(real, odom, pose_est, mu, sigma, landmarks, timestep, observ
       drawnow;
       %pause(0.1);
     else
-      figure(1, "visible", "on"); %BUGGY
-      filename = sprintf('../plots/ekf_%03d.png', timestep);
-      print(filename, '-dpng');
+       saveas(gcf,"./imagens/camera/image_"+timestep+".png");
     end
 end

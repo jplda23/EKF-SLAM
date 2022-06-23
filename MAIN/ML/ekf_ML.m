@@ -17,6 +17,8 @@ function [debug, saved_mu, saved_sigma, mul] = ekf_ML(odom_data, sensor_data, la
     mu(1) = 0.5; mu(2) = 0.5;
     
     sigma = zeros(3);
+
+    N_ML = 0;
     
     pose_est = struct('x', 0, 'y', 0, 'theta', 0);
          
@@ -70,7 +72,7 @@ function [debug, saved_mu, saved_sigma, mul] = ekf_ML(odom_data, sensor_data, la
         saved_sigma{t} = sigma;
 
         % Generate visualization plots of the current state of the filter
-        plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, t, observedLandmarks, sensor_data(t).sensor, showGui);
+        plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, t, N_ML, sensor_data(t).sensor, showGui);
     
     end
 
