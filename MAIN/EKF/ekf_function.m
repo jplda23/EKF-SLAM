@@ -2,7 +2,7 @@
 
 function [saved_mu, saved_sigma, pose_est] = ekf_function(odom_data, sensor_data, landmarks, real, odom)
 
-    showGui = true;  % show a window while the algorithm runs
+    showGui = false;  % show a window while the algorithm runs
 
     INF = 20;
 

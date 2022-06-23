@@ -99,7 +99,7 @@ end
 % Uses the previous images to make a video
 % Long runtime - Avoid running if unnecessary - used make_video for flag
 
-make_video = false; %Change to true if you want to make a video
+make_video = true; %Change to true if you want to make a video
 
 if (make_video)
 %     imageNames = dir(fullfile("imagens/camera",'image_','*.png'));
@@ -118,7 +118,7 @@ if (make_video)
 %     
 %     close(outputVideo)
 
-    video = VideoWriter('yourvideo.avi'); %create the video object
+    video = VideoWriter('newvideo.avi'); %create the video object
     open(video); %open the file for writing
     for ii=1:length(odom_data.timestep) %where N is the number of images
       I = imread(fullfile("imagens/camera","image_"+ii+".png")); %read the next image
