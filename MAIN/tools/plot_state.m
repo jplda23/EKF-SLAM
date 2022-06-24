@@ -26,8 +26,8 @@ function plot_state(real, odom, pose_est, mu, sigma, landmarks, timestep, observ
 
     h5 = drawrobot(mu(1:3), 0.3);
     legend([h1 h2 h3 h4 h5],{'Real Trajectory','Odometry','Estimated Position','Landmarks','Robot'})
-    xlim([-2, 12])
-    ylim([-2, 12])
+    %xlim([-2, 12])
+    %ylim([-2, 12])
     hold off
 
     if window

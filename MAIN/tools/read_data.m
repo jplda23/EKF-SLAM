@@ -1,4 +1,4 @@
-function [data, timestep, sensors] = read_data(filename1, filename2)
+function [data, timestep, sensors] = read_data(camera_tf, headRot, filename1, filename2, N)
 
     input = load(filename1);
     sensors = load(filename2);
@@ -6,12 +6,20 @@ function [data, timestep, sensors] = read_data(filename1, filename2)
     for q = 2:size(sensors.array(:, 1))-1
         if ~isnan(sensors.array(q, 2)) && ~isnan(sensors.array(q+1, 2)) && ~isnan(sensors.array(q-1, 2))         
             if sensors.array(q, 1) ~= sensors.array(q+1, 1) && sensors.array(q, 1) ~= sensors.array(q-1, 1)
-                if sensors.array(q, 2) ~= sensors.array(q+1, 2) && sensors.array(q, 2) ~= sensors.array(q-1, 2)      
+                if sensors.array(q, 2) ~= sensors.array(q+1, 2) && sensors.array(q, 2) ~= sensors.array(q-1, 2)
                     sensors.array(q, 2) = NaN;
                     sensors.array(q, 3) = NaN;
                     sensors.array(q, 4) = NaN;
                 end
             end
+        end
+    end
+
+    for q = 1:size(sensors.array(:, 1))
+        if sensors.array(q, 2) > N-1
+            sensors.array(q, 2) = NaN;
+            sensors.array(q, 3) = NaN;
+            sensors.array(q, 4) = NaN;
         end
     end
 
@@ -34,8 +42,8 @@ function [data, timestep, sensors] = read_data(filename1, filename2)
 
         timestep(i).sensor_struct(j).time = time;
         timestep(i).sensor_struct(j).id = sensors.array(k,2) + 1;
-        timestep(i).sensor_struct(j).range = sqrt(sensors.array(k,3)^2 + (sensors.array(k,4) +0.26)^2);
-        timestep(i).sensor_struct(j).bearing = wrapToPi(atan2(-sensors.array(k,3), (sensors.array(k,4) +0.26)));
+        timestep(i).sensor_struct(j).range = sqrt(sensors.array(k,3)^2 + (sensors.array(k,4) + camera_tf)^2);
+        timestep(i).sensor_struct(j).bearing = wrapToPi(atan2(-sensors.array(k,3), (sensors.array(k,4) + camera_tf)));
 
         if time ~= time2
             i = i+1;
@@ -88,7 +96,12 @@ function [data, timestep, sensors] = read_data(filename1, filename2)
 
         if abs(odom.time - time) < 0.0224
             data.timestep(i).sensor = timestep(j).sensor_struct;
-            j = j + 1;
+            for f = 1:size(data.timestep(i).sensor,2)
+                data.timestep(i).sensor(f).bearing = data.timestep(i).sensor(f).bearing + headRot(i);
+            end
+            if j < size(timestep, 2)
+                j = j + 1;
+            end
         else
             data.timestep(i).sensor.time = timestep(j).sensor_struct.time;
             data.timestep(i).sensor.id = NaN;

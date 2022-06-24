@@ -1,14 +1,32 @@
 % Data analyses ROS retrieve data from rosbag and store in two separate
 % files
-function rosbag_data(rosbag_name)
+function [cameraTF, headRot] = rosbag_data(rosbag_name)
 
     bag = rosbag(rosbag_name);
     start = bag.StartTime;
     finish = bag.EndTime;
+    frames = bag.AvailableFrames;
+    
+    baseToHead = getTransform(bag,frames{4},frames{15}, start);
+    headToCamera = getTransform(bag,frames{15},frames{12}, start);
+    baseToHeadTranslation = baseToHead.Transform.Translation.X;
+    headToCameraTranslation = headToCamera.Transform.Translation.X;
+
+    cameraTF = baseToHeadTranslation + headToCameraTranslation;
+
+    i = 1;
+
+    for t = start:1/50:finish
+        aux = getTransform(bag,frames{4},frames{15},t);
+        headRot(i,1:3) = quat2eul([aux.Transform.Rotation.X aux.Transform.Rotation.Y aux.Transform.Rotation.Z aux.Transform.Rotation.W]);
+        i=i+1;
+    end
     
     % Gather Relevant Data in TimeSeries
     bag_odom = select(bag,"Topic","/odom_diff");
     bag_real = select(bag,"Topic","/odom_gt");
+    bag_tf = select(bag,"Topic","/tf");
+    tf = readMessages(bag_tf,"DataFormat","struct");
     
     %Gather time, X, Y and Theta values of odometry in Odometria matrix
     ts = timeseries(bag_odom,"Pose.Pose.Position.X","Pose.Pose.Position.Y");
@@ -35,8 +53,8 @@ function rosbag_data(rosbag_name)
     Real(:,4) = matrix_aux2(:,3);
     
     %remove the next 2 comments in case of crash at the end of the simmulation:
-%     Odometria = Odometria(1:end-100,:);  
-%     Real = Real(1:end-100,:);
+    Odometria = Odometria(1:end,:);  
+    Real = Real(1:size(Odometria,1),:);
     
     % Save Workspace
     save('RealvsOdom',"Real","Odometria")

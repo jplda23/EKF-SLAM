@@ -15,7 +15,7 @@ addpath('ML');
 addpath('Real');
 
 %set to true if microsimulator; set to false if real data.
-microsim_flag = true;
+microsim_flag = false;
 ML_flag = false;
 
 %% Directory creation
@@ -38,16 +38,16 @@ if (microsim_flag)
     [odom_data] = read_data_sim('real_odom_sim.mat');
     load('sensor_data_sim.mat');
 else
-%     rosbag_name = 'long_run.bag';
-%     rosbag(rosbag_name);
-    landmarks_file = 'landmarks.dat';
+    rosbag_name = 'final.bag';
+    [cameraTF, headRot] = rosbag_data(rosbag_name);
+    landmarks_file = 'landmarksmany.dat';
     fileID = fopen(landmarks_file,'r');
     [landmarks,~] = fscanf(fileID, ['%d' '%f' '%f' '\n'],[3,Inf]);
     landmarks = landmarks';
     fclose(fileID);
 
     % Read sensor readings, i.e. odometry and range-bearing sensor
-    [odom_data, ~] = read_data('RealvsOdom2.mat', 'sensor_data2.mat');
+    [odom_data, ~] = read_data(cameraTF, headRot(:,3), 'RealvsOdom6.mat', 'sensor_data6.mat', size(landmarks, 1));
 end
 
 
