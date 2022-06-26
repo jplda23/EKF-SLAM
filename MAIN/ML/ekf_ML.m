@@ -45,7 +45,7 @@ function [debug, saved_mu, saved_sigma, mul] = ekf_ML(odom_data, sensor_data, la
         % Perform the correction step of the EKF
         if ~isnan(sensor_data(t).sensor(1).id)
 
-            [mu, sigma, SeenLandmarks, pik, indexes] = correction_step_ML(mu, sigma, sensor_data(t).sensor(a), t);
+            [mu, sigma, SeenLandmarks, pik, indexes] = correction_step_ML(mu, sigma, sensor_data(t).sensor, t);
 
             N_ML = (length(mu)-3)/2;
         

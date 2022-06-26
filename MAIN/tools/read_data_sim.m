@@ -26,8 +26,6 @@ function [data] = read_data_sim(filename1)
     data.timestep(1).real.y = 0.5;
     data.timestep(1).real.theta = 0;
 
-    j = 1;
-
     for i = 2:size(input.Odometria)
         if(first == 0)
             data.timestep(i-1).odometry = odom;

@@ -1,4 +1,4 @@
-function error_calculation(real, odom, saved_mu, landmarks, sensor_data)
+function [d_real_odom, d_real_estimated, observed_landmarks] = error_calculation(real, odom, saved_mu, landmarks, sensor_data)
 
 t = 1:length(saved_mu(1, :)) ; 
 
@@ -39,12 +39,13 @@ legend('Real vs Odometry', 'Real vs Estimated')
 xlabel("Iteration number")
 ylabel("Error (m)")
 title("Errors of the robot's trajectory (m)")
+saveas(gcf,"./figures/error_sim_trajectory_iterations.png");
 
 % plot doble y axis landmarks seen and error
 figure()
-plot(t, d_real_odom)
+plot(real.time(t), d_real_odom)
 hold on
-plot(t, d_real_estimated)%,'Color',[0.8500 0.3250 0.0980])
+plot(real.time(t), d_real_estimated)%,'Color',[0.8500 0.3250 0.0980])
 xlabel("Iteration number")
 ylabel("Error (m)")
 title("Errors of the robot's trajectory (m)")
@@ -58,11 +59,11 @@ for i = 1:length(sensor_data)-1
     end
 end
 ylabel("Number of seen landmarks")
-plot(t, observed_landmarks,'Color',[0.4660 0.6740 0.1880])
+plot(real.time, observed_landmarks,'Color',[0.4660 0.6740 0.1880])
 legend('Real vs Odometry', 'Real vs Estimated')
 set(gca, 'YTick', 0:length(landmarks))
 set(gca,'ycolor',[0.4660 0.6740 0.1880])
-
+saveas(gcf,"./figures/error_sim_trajectory_observations_time.png");
 
 
 % Plot Landmark Estimation Error
@@ -79,6 +80,7 @@ set(gca,'ycolor',[0.4660 0.6740 0.1880])
  xlabel("Iteration number")
  ylabel("Error (m)")
  title("Errors of the landmarks' position estimation (m)")
+ saveas(gcf,"./figures/landmark_error_sim_iterations.png");
 
 end
 

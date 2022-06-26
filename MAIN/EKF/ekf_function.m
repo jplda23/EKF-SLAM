@@ -36,12 +36,11 @@ function [saved_mu, saved_sigma, pose_est, pik] = ekf_function(odom_data, sensor
      
         % Perform the correction step of the EKF
         if ~isnan(sensor_data(t).sensor(1).id)
-            m = size(sensor_data(t).sensor, 2);
-            for a = 1:m
-                if sensor_data(t).sensor(a).id ~= 1
-                [mu, sigma, observedLandmarks, pik] = correction_step(mu, sigma, sensor_data(t).sensor(a), observedLandmarks, t, pik);
-                end
-            end     
+%             for a = 1:size(sensor_data(t).sensor, 2)
+%                 if sensor_data(t).sensor(a).id ~= 1
+            [mu, sigma, observedLandmarks, pik] = correction_step(mu, sigma, sensor_data(t).sensor, observedLandmarks, t, pik);
+%                 end
+%             end     
         end
         
         pose_est.x(t) = mu(1); pose_est.y(t) = mu(2);

@@ -16,7 +16,7 @@ addpath('ML');
 addpath('Real');
 
 %set to true if microsimulator; set to false if real data.
-microsim_flag = false;
+microsim_flag = true;
 ML_flag = true;
 
 %% Directory creation
@@ -37,7 +37,7 @@ end
 
 if (microsim_flag)
     waypoints_file = 'waypoints3.dat';
-    landmarks_file = 'landmarks_sim3.dat';
+    landmarks_file = 'landmarks_sim3 - Cópia.dat';
     landmarks = microsimulator(waypoints_file,landmarks_file);
     [odom_data] = read_data_sim('real_odom_sim.mat');
     load('sensor_data_sim.mat');
