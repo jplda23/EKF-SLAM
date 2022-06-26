@@ -33,14 +33,15 @@ function [saved_mu, saved_sigma, pose_est, pik] = ekf_function(odom_data, sensor
         % Perform the prediction step of the EKF
         
         [mu, sigma] = prediction_step(mu, sigma, odom_data(t).odometry, t == 1);
-     
+
+        t
         % Perform the correction step of the EKF
-        if ~isnan(sensor_data(t).sensor(1).id)
-%             for a = 1:size(sensor_data(t).sensor, 2)
+        for a = 1:size(sensor_data(t).sensor, 2)
+            if ~isnan(sensor_data(t).sensor(a).id)
 %                 if sensor_data(t).sensor(a).id ~= 1
-            [mu, sigma, observedLandmarks, pik] = correction_step(mu, sigma, sensor_data(t).sensor, observedLandmarks, t, pik);
+                    [mu, sigma, observedLandmarks, pik] = correction_step(mu, sigma, sensor_data(t).sensor(a), observedLandmarks, t, pik);
 %                 end
-%             end     
+            end     
         end
         
         pose_est.x(t) = mu(1); pose_est.y(t) = mu(2);

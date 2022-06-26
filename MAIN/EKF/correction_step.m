@@ -13,7 +13,7 @@ for i = 1:m
     
 	landmarkId = z(i).id;
 
-	if(observedLandmarks(landmarkId)==false)
+    if(observedLandmarks(landmarkId)==false)
         mu(3+landmarkId*2-1) = mu(1) + z(i).range * cos(wrapToPi(z(i).bearing+mu(3)));
         mu(3+landmarkId*2)   = mu(2) + z(i).range * sin(wrapToPi(z(i).bearing+mu(3)));
 		

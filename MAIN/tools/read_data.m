@@ -120,6 +120,7 @@ function [data, timestep, sensors] = read_data(camera_tf, filename1, filename2, 
         real.x = input.Real(i, 2);
         real.y = input.Real(i, 3);
         real.theta = input.Real(i, 4);
+        real.time = input.Real(i,1);
     end
     
     data.timestep(i).real = real;
