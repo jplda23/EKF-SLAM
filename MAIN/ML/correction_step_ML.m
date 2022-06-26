@@ -12,8 +12,8 @@ seen_ids = zeros(m,1);
 
 indexes = size(m,1);
 
-Q = eye(2) .* 0.1;
-Qm = eye(2*m) .* 0.1;
+Q = eye(2) .* 1;
+Qm = eye(2*m) .* 1;
 
 H = [];
 pim = [];

@@ -1,4 +1,4 @@
-function plot_state(real, odom, pose_est, mu, sigma, landmarks, timestep, observedLandmarks, z, window)
+function plot_state(real, odom, pose_est, mu, sigma, landmarks, timestep, observedLandmarks, z, window, saved_mu, saved_sigma)
 
     clf;
     hold on
@@ -7,7 +7,9 @@ function plot_state(real, odom, pose_est, mu, sigma, landmarks, timestep, observ
     h2 = plot(odom.x, odom.y);
     h3 = plot(pose_est.x, pose_est.y);
     h4 = plot(landmarks(:,2), landmarks(:,3), 'ks', 'markersize', 10, 'linewidth', 2);
-    drawprobellipse(mu(1:3), sigma(1:3,1:3), 0.6, [0 0.75 1]);
+    for i = 1: 106:length(saved_mu)
+        drawprobellipse(saved_mu(1:3,i), saved_sigma{i,1}(1:3,1:3), 0.6, [0 0.75 1]);
+    end
     xlabel("x(m)")
     ylabel("y(m)")
     for i=1:length(observedLandmarks)

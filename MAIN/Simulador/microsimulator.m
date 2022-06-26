@@ -1,8 +1,9 @@
 % Micro-simulator
-function [landmarks] = microsimulator(waypoints_file,landmarks_file)
+function [landmarks,state] = microsimulator(waypoints_file,landmarks_file)
 
     rng(2) %Set the seed to get the same results every iteration. Seed 1 or 2.
     % Get data from files
+    state = 1;%rng;
     fileID = fopen(waypoints_file,'r');
     [waypoints,~] = fscanf(fileID, ['%f' '%f' '\n'],[2,Inf]);
     waypoints = waypoints';
@@ -73,10 +74,10 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
             % SENSOR ESTIMATION
             empty = 1;
             for l = 1:length(landmarks)
-                range = sqrt((landmarks(l,2) - Real(j,2))^2 + (landmarks(l,3) - Real(j,3))^2) + wgn(1,1,-42);
+                range = sqrt((landmarks(l,2) - Real(j,2))^2 + (landmarks(l,3) - Real(j,3))^2) + wgn(1,1,-32);
     
                 if(range < line_of_sight)                
-                    bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2)) + wgn(1,1,-42);
+                    bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2)) + wgn(1,1,-32);
     
                     if (-alpha < bearing) && (bearing < alpha)
                         reading = struct;

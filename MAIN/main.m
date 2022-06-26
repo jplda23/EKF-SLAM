@@ -15,8 +15,8 @@ addpath('ML');
 addpath('Real');
 
 %set to true if microsimulator; set to false if real data.
-microsim_flag = false;
-ML_flag = false;
+microsim_flag = true;
+ML_flag = true;
 
 %% Directory creation
 if ~exist('./imagens', 'dir')
@@ -28,13 +28,16 @@ end
 if ~exist('./imagens/video', 'dir')
     mkdir('imagens/video');
 end
+if ~exist('./figures', 'dir')
+    mkdir('figures');
+end
 
 %% DATA TREATMENT
 
 if (microsim_flag)
     waypoints_file = 'waypoints3.dat';
     landmarks_file = 'landmarks_sim3.dat';
-    landmarks = microsimulator(waypoints_file,landmarks_file);
+    [landmarks,state] = microsimulator(waypoints_file,landmarks_file);
     [odom_data] = read_data_sim('real_odom_sim.mat');
     load('sensor_data_sim.mat');
 else
@@ -52,17 +55,20 @@ end
 
 
 %to do the plot
+odom = struct('x', cell(1,1), 'y', cell(1,1), 'theta', cell(1,1), 'time', cell(1,1));
 for t = 1:size(odom_data.timestep, 2)
     odom.x(t) = odom_data.timestep(t).odometry.x;
     odom.y(t) = odom_data.timestep(t).odometry.y;
     odom.theta(t) = odom_data.timestep(t).odometry.theta;
+    odom.time(t) = odom_data.timestep(t).odometry.time;
 end
 
-real = struct('x', cell(1,1), 'y', cell(1,1), 'theta', cell(1,1));
+real = struct('x', cell(1,1), 'y', cell(1,1), 'theta', cell(1,1), 'time', cell(1,1));
 for t = 1:size(odom_data.timestep, 2)
     real.x(t) = odom_data.timestep(t).real.x;
     real.y(t) = odom_data.timestep(t).real.y;
     real.theta(t) = odom_data.timestep(t).real.theta;
+    real.time(t) = odom_data.timestep(t).real.time;
 end
 
 
@@ -73,24 +79,24 @@ if(microsim_flag)
     if (~ML_flag) %LANDMARKS WITH ID's
        
         [saved_mu, saved_sigma, pose_nolandmark] = ekf_function(odom_data.timestep, sensor_data, landmarks, real, odom); 
-        error_calculation(real, odom, saved_mu, landmarks); 
+        [d_real_odom, d_real_estimated, observed_landmarks] = error_calculation(real, odom, saved_mu, landmarks,sensor_data); 
     
     elseif (ML_flag) %LANDMARKS WITHOUT ID's
         
         [debug, saved_mu, saved_sigmas, lnd_order] = ekf_ML(odom_data.timestep, sensor_data, landmarks, real, odom);
-        error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order);
+        error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order,sensor_data);
     end
 %real data
 elseif(~microsim_flag)
     if (~ML_flag) %LANDMARKS WITH ID's
         
         [saved_mu, saved_sigma, pose_nolandmark] = ekf_function(odom_data.timestep, odom_data.timestep, landmarks, real, odom);
-        error_calculation(real, odom, saved_mu, landmarks); 
+        error_calculation(real, odom, saved_mu, landmarks,sensor_data); 
 
     elseif (ML_flag) %LANDMARKS WITHOUT ID's
         
         [debug, saved_mu, saved_sigmas, lnd_order] = ekf_ML(odom_data.timestep, odom_data.timestep, landmarks, real, odom);
-%         error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order);
+        error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order,sensor_data);
     end
 end
 

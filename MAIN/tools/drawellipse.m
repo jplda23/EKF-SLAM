@@ -14,5 +14,5 @@ function h = drawellipse(x,a,b,color)
     p = R*p + T;
     
     % Plot
-    h = plot(p(1,:),p(2,:),'Color',color, 'linewidth', 2);
+    h = plot(p(1,:),p(2,:),'Color',color, 'linewidth', 1);
 end
