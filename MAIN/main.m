@@ -17,7 +17,7 @@ addpath('Real');
 
 %set to true if microsimulator; set to false if real data.
 microsim_flag = false;
-ML_flag = false;
+ML_flag = true;
 
 %% Directory creation
 if ~exist('./imagens', 'dir')
@@ -98,7 +98,7 @@ elseif(~microsim_flag)
     elseif (ML_flag) %LANDMARKS WITHOUT ID's
         
         [debug, saved_mu, saved_sigma, lnd_order] = ekf_ML(odom_data.timestep, odom_data.timestep, landmarks, real, odom);
-        [d_real_odom, d_real_estimated, observed_landmarks] = error_calculation(real, odom, saved_mu, landmarks, sensor_data);  
+        [d_real_odom, d_real_estimated, observed_landmarks] = error_calculation(real, odom, saved_mu, landmarks, odom_data.timestep);  
     end
 end
 

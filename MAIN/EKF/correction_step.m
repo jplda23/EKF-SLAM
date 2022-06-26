@@ -31,16 +31,11 @@ for i = 1:m
     Fx = [ eye(3) zeros(3, 2*N); zeros(2, 2*landmarkId+1) eye(2) zeros(2, 2*N-2*landmarkId) ];
     Hi = 1/q * [ -sqrt(q)*b(1), -sqrt(q)*b(2), 0, +sqrt(q)*b(1), +sqrt(q)*b(2);
                  +b(2), -b(1), -q, -b(2), +b(1) ] * Fx;
-
-    %Qd = eye(2) .* 0.2;
-    %mahalanobis_distance = Hi * sigma * Hi' + Qd;
-    %pik(m, t) = (Z(i*2-1:i*2) - expectedZ(i*2-1:i*2))' * inv(mahalanobis_distance) * (Z(i*2-1:i*2) - expectedZ(i*2-1:i*2));
 	
 	H = [H;Hi];
 end
-%0.01, 0.09 odom8 e 5
-%0.01, 0.09 odom7  !!!!
-% 0.3, 2 odom 9
+
+%microsimulator Q = 0.1
 Q = eye(2*m) .* 0.01;
 for g = 1:m
     Q(2*g,2*g) = 0.09;
