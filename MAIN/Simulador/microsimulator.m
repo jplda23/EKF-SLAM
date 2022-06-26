@@ -1,5 +1,5 @@
 % Micro-simulator
-function [landmarks] = microsimulator(waypoints_file,landmarks_file)
+function landmarks = microsimulator(waypoints_file,landmarks_file)
 
     rng(2) %Set the seed to get the same results every iteration. Seed 1 or 2.
     % Get data from files
@@ -27,8 +27,8 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
     init_time = 0; %seg %initial simulation time
     
     %sensor parameters
-    line_of_sight = 2; %m
-    alpha = pi/3; %radius of observation for the camera
+    line_of_sight = 5; %m
+    alpha = pi/2; %radius of observation for the camera
     
     %Create Real data matrix
     Real = zeros(sim_time*sample_freq,4);
@@ -80,7 +80,7 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
                 if(range < line_of_sight)                
                     bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2)) + wgn(1,1,-46);
     
-                    if abs(bearing) < alpha
+                    if (-alpha < bearing) && (bearing < alpha)
                         reading = struct;
                         reading.time    = Real(j,1);
                         reading.id      = landmarks(l,1);
@@ -119,47 +119,3 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
     save('./Simulador/sensor_data_sim',"sensor_data");
 
 end
-
-
-%% garbish
-% for i = 5:length(Real)-5
-%     if(Real(i,4) ~= Real(i+1,4))
-%         dif = Real(i+1,4) - Real(i,4);
-%         for j = -5:5
-%              Real(i+j,4) = Real(i-j,4) + dif*j;
-%         end
-%     end
-% 
-% end
-
-% k = 1;
-% for i = 1:length(data)
-%     for j = 1:length(data(i).sensor)
-%         array(k,1) = data(i).sensor(j).time;
-%         array(k,2) = data(i).sensor(j).id;
-%         array(k,3) = data(i).sensor(j).range;
-%         array(k,4) = data(i).sensor(j).bearing;
-%         k = k+1;
-%     end
-% end
-
-
-%% Plot Data 
-% % plot_step(sensor_data, Odometria, Real, landmarks)
-
-%% RUN SET LANDMARKS SLAM
-%ainda não funciona
-
-% [mu_1, sigma_1, observedLandmarks_1, pose_est_1, pose_nolandmark_1] = EKF_ids(Odometria, landmarks,sensor_data);
-% 
-% figure()
-% plot(pose_est_1.x,pose_est_1.y)
-% figure()
-% plot(pose_nolandmark_1.x,pose_nolandmark_1.y)
-
-%% RUN NO ID LANDMARKS SLAM
-%ainda não funciona
-
-% [mu, sigma, observedLandmarks, pose_est, pose_nolandmark] = EKF(Odometria, landmarks,sensor_data);
-% 
-% plot(pose_est.x,pose_est.y)

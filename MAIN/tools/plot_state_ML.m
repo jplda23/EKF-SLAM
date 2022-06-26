@@ -1,8 +1,4 @@
 function plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, timestep, N_ML, z, window)
-%landmarks(1,2)=landmarks(2,2);
-%landmarks(1,3)=landmarks(2,3);
-%landmarks(14,2)=landmarks(2,2);
-%landmarks(14,3)=landmarks(2,3);
 
     clf;
     hold on

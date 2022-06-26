@@ -49,9 +49,10 @@ function [saved_mu, saved_sigma, pose_est, pik] = ekf_function(odom_data, sensor
         saved_sigma{t} = sigma;
 
         % Generate visualization plots of the current state of the filter
-        if  t == length(odom_data)
-        plot_state(real, odom, pose_est, mu, sigma, landmarks, t, observedLandmarks, sensor_data(t).sensor, showGui);
-        end 
+        if t == length(odom_data)-1
+            plot_state(real, odom, pose_est, mu, sigma, landmarks, t, observedLandmarks, sensor_data(t).sensor, showGui,saved_mu,saved_sigma);
+            saveas(gcf,"./figures/trajectory.png");
+        end
     end
 
 %     p = 1:length(pik(1, :));
