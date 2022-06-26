@@ -1,4 +1,4 @@
-function [mu, sigma, observedLandmarks] = correction_step(mu, sigma, z, observedLandmarks)
+function  [mu, sigma, observedLandmarks, pik] = correction_step(mu, sigma, z, observedLandmarks, t, pik)
 
 N = (length(mu)-3)/2;
 
@@ -8,16 +8,17 @@ Z = zeros(m*2, 1);
 expectedZ = zeros(m*2, 1);
 
 H = [];
-
-for i = 1:m
+   
+for i = 1:m 
+    
 	landmarkId = z(i).id;
 
-	if(observedLandmarks(landmarkId)==false)
+    if(observedLandmarks(landmarkId)==false)
         mu(3+landmarkId*2-1) = mu(1) + z(i).range * cos(wrapToPi(z(i).bearing+mu(3)));
         mu(3+landmarkId*2)   = mu(2) + z(i).range * sin(wrapToPi(z(i).bearing+mu(3)));
 		
 		observedLandmarks(landmarkId) = true;
-end
+    end
 
     Z(i*2-1) = z(i).range;
     Z(i*2)   = z(i).bearing;
@@ -34,9 +35,10 @@ end
 	H = [H;Hi];
 end
 
-Q = eye(2*m) .* 0.2;
+%microsimulator Q = 0.1
+Q = eye(2*m) .* 0.01;
 for g = 1:m
-    Q(2*g,2*g) = 2;
+    Q(2*g,2*g) = 0.09;
 end
 
 K = sigma*H'*inv(H*sigma*H'+Q);

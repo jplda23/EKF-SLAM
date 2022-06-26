@@ -11,7 +11,7 @@ function plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, timestep, N_M
     drawprobellipse(mu(1:3), sigma(1:3,1:3), 0.6, [0 0.75 1]);
     xlabel("x(m)")
     ylabel("y(m)")
-    
+    title("Robot's trajectory (m)")
     for i=1:N_ML
         plot(mu(2*i+ 2),mu(2*i+ 3), 'ro', 'markersize', 10, 'linewidth', 2)
         drawprobellipse(mu(2*i+ 2:2*i+ 3), sigma(2*i+ 2:2*i+ 3,2*i+ 2:2*i+ 3), 0.6, 'r');
@@ -23,10 +23,15 @@ function plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, timestep, N_M
 %     	line([mu(1), mX],[mu(2), mY], 'color', 'k', 'linewidth', 1);
 %     end
 
+
     drawrobot(mu(1:3), 0.3);
-    legend([h1 h2 h3 h4],{'Real Trajectory','Odometry','Estimated Position','Landmarks'})
+    h6 = plot(real.x(1), real.y(1), 'x', 'markersize', 10, 'linewidth', 2);
+    legend([h1 h2 h3 h4 h6],{'Real Trajectory','Odometry','Estimated Position','Landmarks','Starting Point'})
+    xlim([-5, 5])
+    ylim([-5, 6])
+    %microsimulator limits:
 %     xlim([-2, 12])
-%     ylim([-2, 12])
+%     ylim([-2, 12])  
     hold off
 
     if window

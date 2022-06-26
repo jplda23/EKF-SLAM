@@ -73,7 +73,7 @@ function [data, timestep, sensors] = read_data(camera_tf, filename1, filename2, 
 
     j = 1;
 
-    for i = 2:size(input.Odometria)
+    for i = 2:size(input.Odometria)-100
         if(first == 0)
             data.timestep(i-1).odometry = odom;
             odom = struct;
@@ -111,7 +111,7 @@ function [data, timestep, sensors] = read_data(camera_tf, filename1, filename2, 
 
     first = 1;
 
-    for i = 2:size(input.Odometria)
+    for i = 2:size(input.Odometria)-100
         if(first == 0)
             data.timestep(i-1).real = real;
             real = struct;
@@ -120,6 +120,7 @@ function [data, timestep, sensors] = read_data(camera_tf, filename1, filename2, 
         real.x = input.Real(i, 2);
         real.y = input.Real(i, 3);
         real.theta = input.Real(i, 4);
+        real.time = input.Real(i,1);
     end
     
     data.timestep(i).real = real;

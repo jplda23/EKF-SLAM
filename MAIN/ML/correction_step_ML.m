@@ -1,4 +1,4 @@
-function [mu, sigma, Seen_Landmarks, pim, indexes] = correction_step_ML(mu, sigma, z)
+function [mu, sigma, Seen_Landmarks, pim, indexes] = correction_step_ML(mu, sigma, z, t)
 
 N = (length(mu)-3)/2;   % Número de landmarks já descobertas
 
@@ -12,12 +12,15 @@ seen_ids = zeros(m,1);
 
 indexes = size(m,1);
 
-Q = eye(2) .* 0.1;
-Qm = eye(2*m) .* 0.1;
+Q = eye(2) .* 0.01;
+Q(2,2)=0.09;
+Qm = eye(2*m) .* 0.01;
+for g = 1:m
+    Qm(2*g,2*g) = 0.09;
+end
 
 H = [];
 pim = [];
-
 
 for i = 1:m %landmarks vistas
 
@@ -25,7 +28,7 @@ for i = 1:m %landmarks vistas
 
     mu_provisorio = [mu; zeros(2,1)];
     sigma_provisorio = [sigma zeros(2*N+3, 2);
-                        zeros(2, 2*N+3) Q];%sigma(1:2, 1:2)]; 
+                        zeros(2, 2*N+3) Q]; % Dúvida para o prof: O que meter em lugar do Q (antes estava INF) e nos zeros
 
     % O seu valor é adicionado na última posição do vetor de estados (N+1)
     mu_provisorio(2*N+3 + 1) = mu(1) + z(i).range * cos(wrapToPi(z(i).bearing+mu(3)));
@@ -38,26 +41,35 @@ for i = 1:m %landmarks vistas
     seen_ids(i) = z(i).id; 
 
 
-  for j = 1:N+1   %landmarks no vetor mu_provisório. Existem N+1 landmarks
-
-    b = [mu_provisorio(3+j*2-1) - mu(1); mu_provisorio(3+j*2) - mu(2)];
-    q = b' * b;
-
-    expectedZ(j*2-1) = sqrt(q);
-    expectedZ(j*2) = wrapToPi(atan2(b(2), b(1)) - mu(3));
-
-
-    Fx = [ eye(3) zeros(3, 2*(N+1)); zeros(2, 2*j+1) eye(2) zeros(2, 2*(N+1)-2*j) ];
-    Hi = 1/q * [ -sqrt(q)*b(1), -sqrt(q)*b(2), 0, +sqrt(q)*b(1), +sqrt(q)*b(2);
-                 +b(2), -b(1), -q, -b(2), +b(1) ] * Fx;
-
-    mahalanobis_distance = Hi * sigma_provisorio * Hi' + Q;
-    pik(j,1) = (Z(i*2-1:i*2) - expectedZ(j*2-1:j*2))' * inv(mahalanobis_distance) * (Z(i*2-1:i*2) - expectedZ(j*2-1:j*2));
+     for j = 1:N+1   %landmarks no vetor mu_provisório. Existem N+1 landmarks
+    
+        b = [mu_provisorio(3+j*2-1) - mu(1); mu_provisorio(3+j*2) - mu(2)];
+        q = b' * b;
+    
+        expectedZ(j*2-1) = sqrt(q);
+        expectedZ(j*2) = wrapToPi(atan2(b(2), b(1)) - mu(3));
+    
+    
+        Fx = [ eye(3) zeros(3, 2*(N+1)); zeros(2, 2*j+1) eye(2) zeros(2, 2*(N+1)-2*j) ];
+        Hi = 1/q * [ -sqrt(q)*b(1), -sqrt(q)*b(2), 0, +sqrt(q)*b(1), +sqrt(q)*b(2);
+                     +b(2), -b(1), -q, -b(2), +b(1) ] * Fx;
+    
+        mahalanobis_distance = Hi * sigma_provisorio * Hi' + Q;
+        pik(j,1) = (Z(i*2-1:i*2) - expectedZ(j*2-1:j*2))' * inv(mahalanobis_distance) * (Z(i*2-1:i*2) - expectedZ(j*2-1:j*2));
 
     
-  end
+     end
 
-  pik(N+1,1) = 0.3;%3.5e-2;
+%pik(N+1,1) = 0.3;   %%%% microsimulator
+
+     if t == 425 || t == 1832
+        pik(N+1,1) = 4;
+     elseif t == 964 || t == 511
+        pik(N+1,1) = 2; 
+     else                    %%%%%%% Odom7 0.01, 0.09
+        pik(N+1,1) = 6;
+     end
+
   [~, k] = min(pik);
 
   N_new = max([k; N]);

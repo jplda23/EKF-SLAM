@@ -1,5 +1,5 @@
 % Micro-simulator
-function [landmarks] = microsimulator(waypoints_file,landmarks_file)
+function landmarks = microsimulator(waypoints_file,landmarks_file)
 
     rng(2) %Set the seed to get the same results every iteration. Seed 1 or 2.
     % Get data from files
@@ -55,8 +55,10 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
         while sqrt((waypoints(i,1) - Real(j,2))^2 + (waypoints(i,2) - Real(j,3))^2) > 0.2
     
             sensor = struct('time',cell(1,0),'id',cell(1,0),'range',cell(1,0),'bearing',cell(1,0));
-             
+            
+    
             j = j+1;
+    
         
             Real(j,1) = init_time + j/sample_freq;
             Real(j,2) = Real(j-1,2) + (robot_vel)*(1/sample_freq)*cos(theta);
@@ -73,10 +75,10 @@ function [landmarks] = microsimulator(waypoints_file,landmarks_file)
             % SENSOR ESTIMATION
             empty = 1;
             for l = 1:length(landmarks)
-                range = sqrt((landmarks(l,2) - Real(j,2))^2 + (landmarks(l,3) - Real(j,3))^2) + wgn(1,1,-42);
+                range = sqrt((landmarks(l,2) - Real(j,2))^2 + (landmarks(l,3) - Real(j,3))^2) + wgn(1,1,-32);
     
                 if(range < line_of_sight)                
-                    bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2)) + wgn(1,1,-42);
+                    bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2)) + wgn(1,1,-32);
     
                     if (-alpha < bearing) && (bearing < alpha)
                         reading = struct;

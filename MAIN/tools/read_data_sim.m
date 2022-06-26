@@ -26,8 +26,6 @@ function [data] = read_data_sim(filename1)
     data.timestep(1).real.y = 0.5;
     data.timestep(1).real.theta = 0;
 
-    j = 1;
-
     for i = 2:size(input.Odometria)
         if(first == 0)
             data.timestep(i-1).odometry = odom;
@@ -63,6 +61,7 @@ function [data] = read_data_sim(filename1)
         real.x = input.Real(i, 2);
         real.y = input.Real(i, 3);
         real.theta = input.Real(i, 4);
+        real.time = input.Real(i,1);
     end
     
     data.timestep(i).real = real;
