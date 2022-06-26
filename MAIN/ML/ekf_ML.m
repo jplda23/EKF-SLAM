@@ -75,8 +75,8 @@ function [debug, saved_mu, saved_sigma, mul] = ekf_ML(odom_data, sensor_data, la
 
         % Generate visualization plots of the current state of the filter
 %         if t == length(odom_data)
-            plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, t, N_ML, sensor_data(t).sensor, showGui);
+            
 %         end
     end
-
+plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, t, N_ML, sensor_data(t).sensor, showGui);
 end

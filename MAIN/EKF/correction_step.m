@@ -34,7 +34,10 @@ end
 	H = [H;Hi];
 end
 
-Q = eye(2*m) .* 1;
+Q = eye(2*m) .* 0.2;
+for g = 1:m
+    Q(2*g,2*g) = 2;
+end
 
 K = sigma*H'*inv(H*sigma*H'+Q);
 

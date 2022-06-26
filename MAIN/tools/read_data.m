@@ -1,4 +1,4 @@
-function [data, timestep, sensors] = read_data(camera_tf, headRot, filename1, filename2, N)
+function [data, timestep, sensors] = read_data(camera_tf, filename1, filename2, N)
 
     input = load(filename1);
     sensors = load(filename2);
@@ -96,9 +96,6 @@ function [data, timestep, sensors] = read_data(camera_tf, headRot, filename1, fi
 
         if abs(odom.time - time) < 0.0224
             data.timestep(i).sensor = timestep(j).sensor_struct;
-            for f = 1:size(data.timestep(i).sensor,2)
-                data.timestep(i).sensor(f).bearing = data.timestep(i).sensor(f).bearing + headRot(i);
-            end
             if j < size(timestep, 2)
                 j = j + 1;
             end
