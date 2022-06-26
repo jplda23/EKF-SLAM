@@ -37,7 +37,7 @@ end
 
 if (microsim_flag)
     waypoints_file = 'waypoints3.dat';
-    landmarks_file = 'landmarks_sim3 - Cópia.dat';
+    landmarks_file = 'landmarks_sim3.dat';
     landmarks = microsimulator(waypoints_file,landmarks_file);
     [odom_data] = read_data_sim('real_odom_sim.mat');
     load('sensor_data_sim.mat');
