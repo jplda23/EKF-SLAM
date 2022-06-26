@@ -1,26 +1,26 @@
 % Data analyses ROS retrieve data from rosbag and store in two separate
 % files
-function [cameraTF, headRot] = rosbag_data(rosbag_name)
+function rosbag_data(rosbag_name)
 
     bag = rosbag(rosbag_name);
     start = bag.StartTime;
     finish = bag.EndTime;
     frames = bag.AvailableFrames;
     
-    baseToHead = getTransform(bag,frames{4},frames{15}, start);
-    headToCamera = getTransform(bag,frames{15},frames{12}, start);
-    baseToHeadTranslation = baseToHead.Transform.Translation.X;
-    headToCameraTranslation = headToCamera.Transform.Translation.X;
+%     baseToHead = getTransform(bag,frames{4},frames{15}, start);
+%     headToCamera = getTransform(bag,frames{15},frames{12}, start);
+%     baseToHeadTranslation = baseToHead.Transform.Translation.X;
+%     headToCameraTranslation = headToCamera.Transform.Translation.X;
 
-    cameraTF = baseToHeadTranslation + headToCameraTranslation;
+%     cameraTF = baseToHeadTranslation + headToCameraTranslation;
 
     i = 1;
 
-    for t = start:1/50:finish
-        aux = getTransform(bag,frames{4},frames{15},t);
-        headRot(i,1:3) = quat2eul([aux.Transform.Rotation.X aux.Transform.Rotation.Y aux.Transform.Rotation.Z aux.Transform.Rotation.W]);
-        i=i+1;
-    end
+%     for t = start:1/50:finish
+%         aux = getTransform(bag,frames{4},frames{15},t);
+%         headRot(i,1:3) = quat2eul([aux.Transform.Rotation.X aux.Transform.Rotation.Y aux.Transform.Rotation.Z aux.Transform.Rotation.W]);
+%         i=i+1;
+%     end
     
     % Gather Relevant Data in TimeSeries
     bag_odom = select(bag,"Topic","/odom_diff");
@@ -54,7 +54,7 @@ function [cameraTF, headRot] = rosbag_data(rosbag_name)
     
     %remove the next 2 comments in case of crash at the end of the simmulation:
     Odometria = Odometria(1:end,:);  
-    Real = Real(1:size(Odometria,1),:);
+    Real = Real(1:end,:);
     
     % Save Workspace
     save('RealvsOdom',"Real","Odometria")

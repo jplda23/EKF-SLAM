@@ -13,8 +13,8 @@ Gx = [0, 0, -u.t*sin( mu(3) + u.r1 );
 
 G = eye(2*N+3) + (Fx' * Gx * Fx);
 
-motionNoise = 0.01;
-R3 = diag([motionNoise, motionNoise, motionNoise/10]);
+motionNoise = 0.0001;
+R3 = diag([motionNoise, motionNoise, motionNoise]);
 R = zeros(size(sigma,1));
 R(1:3,1:3) = R3;
 

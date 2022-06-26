@@ -79,5 +79,5 @@ function [debug, saved_mu, saved_sigma, mul] = ekf_ML(odom_data, sensor_data, la
             saveas(gcf,"./figures/ML_trajectory.png");
         end
     end
-
+plot_state_ML(real, odom, pose_est, mu, sigma, landmarks, t, N_ML, sensor_data(t).sensor, showGui);
 end

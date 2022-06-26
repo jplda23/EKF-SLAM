@@ -41,16 +41,17 @@ if (microsim_flag)
     [odom_data] = read_data_sim('real_odom_sim.mat');
     load('sensor_data_sim.mat');
 else
-    rosbag_name = 'final.bag';
-    [cameraTF, headRot] = rosbag_data(rosbag_name);
-    landmarks_file = 'landmarksmany.dat';
+    rosbag_name = 'congo.bag';
+    rosbag_data(rosbag_name);
+    cameraTF = 0.26;
+    landmarks_file = 'landmarks12.dat';
     fileID = fopen(landmarks_file,'r');
     [landmarks,~] = fscanf(fileID, ['%d' '%f' '%f' '\n'],[3,Inf]);
     landmarks = landmarks';
     fclose(fileID);
 
     % Read sensor readings, i.e. odometry and range-bearing sensor
-    [odom_data, ~] = read_data(cameraTF, headRot(:,3), 'RealvsOdom6.mat', 'sensor_data6.mat', size(landmarks, 1));
+    [odom_data, ~] = read_data(cameraTF, 'RealvsOdom.mat', 'sensor_data11.mat', size(landmarks, 1));
 end
 
 
