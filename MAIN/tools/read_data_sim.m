@@ -60,7 +60,6 @@ function [data] = read_data_sim(filename1)
             real = struct;
         end
         first = 0;
-        real.time = input.Real(i,1);
         real.x = input.Real(i, 2);
         real.y = input.Real(i, 3);
         real.theta = input.Real(i, 4);

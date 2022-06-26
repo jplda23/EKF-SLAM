@@ -1,9 +1,8 @@
 % Micro-simulator
-function [landmarks,state] = microsimulator(waypoints_file,landmarks_file)
+function [landmarks] = microsimulator(waypoints_file,landmarks_file)
 
     rng(2) %Set the seed to get the same results every iteration. Seed 1 or 2.
     % Get data from files
-    state = 1;%rng;
     fileID = fopen(waypoints_file,'r');
     [waypoints,~] = fscanf(fileID, ['%f' '%f' '\n'],[2,Inf]);
     waypoints = waypoints';
@@ -28,8 +27,8 @@ function [landmarks,state] = microsimulator(waypoints_file,landmarks_file)
     init_time = 0; %seg %initial simulation time
     
     %sensor parameters
-    line_of_sight = 5; %m
-    alpha = pi/2; %radius of observation for the camera
+    line_of_sight = 2; %m
+    alpha = pi/3; %radius of observation for the camera
     
     %Create Real data matrix
     Real = zeros(sim_time*sample_freq,4);
@@ -56,8 +55,10 @@ function [landmarks,state] = microsimulator(waypoints_file,landmarks_file)
         while sqrt((waypoints(i,1) - Real(j,2))^2 + (waypoints(i,2) - Real(j,3))^2) > 0.2
     
             sensor = struct('time',cell(1,0),'id',cell(1,0),'range',cell(1,0),'bearing',cell(1,0));
-             
+            
+    
             j = j+1;
+    
         
             Real(j,1) = init_time + j/sample_freq;
             Real(j,2) = Real(j-1,2) + (robot_vel)*(1/sample_freq)*cos(theta);
@@ -74,12 +75,12 @@ function [landmarks,state] = microsimulator(waypoints_file,landmarks_file)
             % SENSOR ESTIMATION
             empty = 1;
             for l = 1:length(landmarks)
-                range = sqrt((landmarks(l,2) - Real(j,2))^2 + (landmarks(l,3) - Real(j,3))^2) + wgn(1,1,-32);
+                range = sqrt((landmarks(l,2) - Real(j,2))^2 + (landmarks(l,3) - Real(j,3))^2) + wgn(1,1,-42);
     
                 if(range < line_of_sight)                
-                    bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2)) + wgn(1,1,-32);
+                    bearing = -theta + atan2(landmarks(l,3) - Real(j,3),landmarks(l,2) - Real(j,2)) + wgn(1,1,-46);
     
-                    if (-alpha < bearing) && (bearing < alpha)
+                    if abs(bearing) < alpha
                         reading = struct;
                         reading.time    = Real(j,1);
                         reading.id      = landmarks(l,1);
@@ -118,3 +119,47 @@ function [landmarks,state] = microsimulator(waypoints_file,landmarks_file)
     save('./Simulador/sensor_data_sim',"sensor_data");
 
 end
+
+
+%% garbish
+% for i = 5:length(Real)-5
+%     if(Real(i,4) ~= Real(i+1,4))
+%         dif = Real(i+1,4) - Real(i,4);
+%         for j = -5:5
+%              Real(i+j,4) = Real(i-j,4) + dif*j;
+%         end
+%     end
+% 
+% end
+
+% k = 1;
+% for i = 1:length(data)
+%     for j = 1:length(data(i).sensor)
+%         array(k,1) = data(i).sensor(j).time;
+%         array(k,2) = data(i).sensor(j).id;
+%         array(k,3) = data(i).sensor(j).range;
+%         array(k,4) = data(i).sensor(j).bearing;
+%         k = k+1;
+%     end
+% end
+
+
+%% Plot Data 
+% % plot_step(sensor_data, Odometria, Real, landmarks)
+
+%% RUN SET LANDMARKS SLAM
+%ainda não funciona
+
+% [mu_1, sigma_1, observedLandmarks_1, pose_est_1, pose_nolandmark_1] = EKF_ids(Odometria, landmarks,sensor_data);
+% 
+% figure()
+% plot(pose_est_1.x,pose_est_1.y)
+% figure()
+% plot(pose_nolandmark_1.x,pose_nolandmark_1.y)
+
+%% RUN NO ID LANDMARKS SLAM
+%ainda não funciona
+
+% [mu, sigma, observedLandmarks, pose_est, pose_nolandmark] = EKF(Odometria, landmarks,sensor_data);
+% 
+% plot(pose_est.x,pose_est.y)

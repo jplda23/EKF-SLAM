@@ -1,4 +1,4 @@
-function [data, timestep, sensors] = read_data(camera_tf, filename1, filename2, N)
+function [data, timestep, sensors] = read_data(filename1, filename2, N)
 
     input = load(filename1);
     sensors = load(filename2);
@@ -42,8 +42,8 @@ function [data, timestep, sensors] = read_data(camera_tf, filename1, filename2, 
 
         timestep(i).sensor_struct(j).time = time;
         timestep(i).sensor_struct(j).id = sensors.array(k,2) + 1;
-        timestep(i).sensor_struct(j).range = sqrt(sensors.array(k,3)^2 + (sensors.array(k,4) + camera_tf)^2);
-        timestep(i).sensor_struct(j).bearing = wrapToPi(atan2(-sensors.array(k,3), (sensors.array(k,4) + camera_tf)));
+        timestep(i).sensor_struct(j).range = sqrt(sensors.array(k,3)^2 + (sensors.array(k,4) +0.26)^2);
+        timestep(i).sensor_struct(j).bearing = wrapToPi(atan2(-sensors.array(k,3), (sensors.array(k,4) +0.26)));
 
         if time ~= time2
             i = i+1;
@@ -73,7 +73,7 @@ function [data, timestep, sensors] = read_data(camera_tf, filename1, filename2, 
 
     j = 1;
 
-    for i = 2:size(input.Odometria)
+    for i = 2:size(input.Odometria)-100
         if(first == 0)
             data.timestep(i-1).odometry = odom;
             odom = struct;
@@ -111,7 +111,7 @@ function [data, timestep, sensors] = read_data(camera_tf, filename1, filename2, 
 
     first = 1;
 
-    for i = 2:size(input.Odometria)
+    for i = 2:size(input.Odometria)-100
         if(first == 0)
             data.timestep(i-1).real = real;
             real = struct;

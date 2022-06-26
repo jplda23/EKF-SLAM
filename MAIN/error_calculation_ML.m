@@ -1,4 +1,4 @@
-function error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order, sensor_data)
+function error_calculation_ML(real, odom, saved_mu, landmarks, lnd_order)
 
 t = 1:length(saved_mu(1, :)); 
 
@@ -37,31 +37,25 @@ plot(t, d_real_odom)
 hold on
 plot(t, d_real_estimated)
 legend('Real vs Odometry', 'Real vs Estimated')
-xlabel("Nº iterations")
-ylabel("Error")
-title("Errors of the robot's trajectory")
-saveas(gcf,"./figures/ML_trajectory_error_iterations.png");
+xlabel("Iteration number")
+ylabel("Error(m)")
+title("Errors of the robot's trajectory (m)")
 
 % Plot Landmark Estimation Error
 
  figure()
  for l = 1:length(lnd_order)
-     plot(find(d_landmark(l,:)), d_landmark(l,find(d_landmark(l,:))));
-     hold on
+     l
+     %if l ~= 14
+         plot(find(d_landmark(l,:)), d_landmark(l,find(d_landmark(l,:))));
+         hold on
+     %end
  end
  hold off
-%  plot(t, d_landmark(2,:))
-%  plot(t, d_landmark(3,:))
-%  plot(t, d_landmark(4,:))
-%  plot(t, d_landmark(5,:))
-%  plot(t, d_landmark(6,:))
-%  plot(t, d_landmark(7,:))
-% plot(t, d_landmark(8,:))
- legend('Landmark 0', 'Landmark 1', 'Landmark 2', 'Landmark 3', 'Landmark 4', 'Landmark 5','Landmark 6', 'Landmark 7')
- xlabel("Nº iterations")
- ylabel("Error")
- title("Errors of the landmarks' position estimation")
- saveas(gcf,"./figures/ML_landmarks_iterations.png");
+ legend('Landmark 1', 'Landmark 2', 'Landmark 3', 'Landmark 4', 'Landmark 5','Landmark 6', 'Landmark 7', 'Landmark 8', 'Landmark 9', 'Landmark 10', 'Landmark 11', 'Landmark 12','Landmark 13', 'Landmark 14')
+ xlabel("Iteration number")
+ ylabel("Error(m)")
+ title("Errors of the landmarks' position estimation (m)")
 
 end
 

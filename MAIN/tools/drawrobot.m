@@ -1,4 +1,4 @@
-function h1 = drawrobot(varargin)
+function h = drawrobot(varargin)
 
 pose  = varargin{1};
 radius = varargin{2};
